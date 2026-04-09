@@ -3,133 +3,155 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SVG Animata Pro | Advanced Creator</title>
+    <title>SVG Animata Ultra | Pro Creator</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* The Canvas Background Grid */
-        .canvas-bg {
-            background-image: radial-gradient(#334155 1px, transparent 1px);
-            background-size: 20px 20px;
-        }
-        
-        /* Advanced Keyframe Library */
-        @keyframes svga-draw { from { stroke-dashoffset: 1000; } to { stroke-dashoffset: 0; } }
-        @keyframes svga-morph { 0%, 100% { border-radius: 50% 50% 50% 50%; transform: scale(1); } 50% { border-radius: 30% 70% 70% 30%; transform: scale(1.05); } }
-        @keyframes svga-hue { from { filter: hue-rotate(0deg); } to { filter: hue-rotate(360deg); } }
-        @keyframes svga-flip { 0% { transform: perspective(400px) rotateY(0); } 100% { transform: perspective(400px) rotateY(360deg); } }
+        .canvas-grid { background-image: radial-gradient(#334155 1px, transparent 1px); background-size: 30px 30px; }
+        .bg-checker { background-image: conic-gradient(#e5e7eb 25%, #ffffff 0 50%, #e5e7eb 0 75%, #ffffff 0); background-size: 20px 20px; }
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-thumb { background: #14b8a6; border-radius: 10px; }
     </style>
 </head>
-<body class="bg-slate-950 text-slate-200 min-h-screen font-sans">
+<body class="bg-slate-950 text-slate-200 min-h-screen font-sans overflow-hidden">
 
     <div class="flex h-screen">
-        <aside class="w-80 border-r border-slate-800 bg-slate-900/50 p-6 flex flex-col gap-8 overflow-y-auto">
-            <header>
-                <h1 class="text-2xl font-black text-teal-400 italic">SVG ANIMATA</h1>
-                <p class="text-[10px] text-slate-500 uppercase tracking-widest font-bold">Advanced Creator Engine</p>
-            </header>
+        <aside class="w-80 border-r border-slate-800 bg-slate-900 flex flex-col shadow-2xl z-10">
+            <div class="p-6 border-b border-slate-800 bg-slate-900/50">
+                <h1 class="text-2xl font-black text-teal-400 tracking-tighter italic">SVG ANIMATA</h1>
+                <p class="text-[10px] text-slate-500 font-bold uppercase tracking-widest">Ultra Edition 2.0</p>
+            </div>
 
-            <section class="space-y-6">
-                <div>
+            <div class="p-6 space-y-6 overflow-y-auto flex-1">
+                <section>
                     <label class="text-[10px] font-bold text-slate-500 uppercase">SVG URL</label>
-                    <input type="text" id="svgUrl" value="https://api.iconify.design/logos:figma.svg" 
-                        class="w-full bg-slate-800 border border-slate-700 rounded p-2 text-xs mt-2 outline-none focus:border-teal-500">
-                </div>
+                    <input type="text" id="svgUrl" value="https://api.iconify.design/logos:google-icon.svg" 
+                        class="w-full bg-slate-950 border border-slate-700 rounded-lg p-3 text-xs mt-2 outline-none focus:border-teal-400">
+                </section>
 
-                <div>
-                    <label class="text-[10px] font-bold text-slate-500 uppercase">Animation Effect</label>
-                    <select id="animType" class="w-full bg-slate-800 border border-slate-700 rounded p-2 text-xs mt-2 outline-none">
-                        <optgroup label="Classic">
+                <section>
+                    <label class="text-[10px] font-bold text-slate-500 uppercase">Animation Library</label>
+                    <select id="animType" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-3 text-xs mt-2 outline-none cursor-pointer">
+                        <optgroup label="Standard Essentials (10)">
                             <option value="pulse">Pulse</option>
                             <option value="spin">Spin</option>
                             <option value="float">Float</option>
+                            <option value="bounce">Bounce</option>
+                            <option value="shake">Shake</option>
+                            <option value="swing">Swing</option>
+                            <option value="zoom">Soft Zoom</option>
+                            <option value="slide">Slide In</option>
+                            <option value="tada">Tada!</option>
+                            <option value="jello">Jello</option>
                         </optgroup>
-                        <optgroup label="Pro Effects">
+                        <optgroup label="Pro Effects (10)">
                             <option value="morph">Liquid Morph</option>
-                            <option value="hue">Color Shift</option>
                             <option value="flip">3D Flip</option>
+                            <option value="glitch">Cyber Glitch</option>
+                            <option value="glaze">Color Glaze</option>
+                            <option value="neon">Neon Glow</option>
+                            <option value="flash">Strobe Flash</option>
+                            <option value="rubber">Rubber Band</option>
+                            <option value="blur">Focus Fade</option>
+                            <option value="skew">Skew Warp</option>
+                            <option value="portal">Portal Spin</option>
                         </optgroup>
                     </select>
-                </div>
+                </section>
 
-                <div class="space-y-4 pt-4 border-t border-slate-800">
-                    <div>
-                        <div class="flex justify-between text-[10px] font-bold text-slate-500 uppercase">
-                            <span>Duration</span>
-                            <span id="durLabel">1.5s</span>
-                        </div>
-                        <input type="range" id="duration" min="0.1" max="5" step="0.1" value="1.5" class="w-full h-1 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-teal-500 mt-2">
+                <section class="space-y-4 pt-4 border-t border-slate-800">
+                    <div class="flex justify-between text-[10px] font-bold text-slate-500 uppercase">
+                        <span>Speed</span>
+                        <span id="durLabel" class="text-teal-400">1.2s</span>
                     </div>
+                    <input type="range" id="duration" min="0.1" max="4" step="0.1" value="1.2" class="w-full h-1 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-teal-500">
                     
-                    <div>
-                        <label class="text-[10px] font-bold text-slate-500 uppercase">Trigger</label>
-                        <div class="grid grid-cols-2 gap-2 mt-2">
-                            <button onclick="setTrigger('loop')" id="loopBtn" class="bg-teal-600 text-[10px] font-bold py-2 rounded">LOOP</button>
-                            <button onclick="setTrigger('hover')" id="hoverBtn" class="bg-slate-800 text-[10px] font-bold py-2 rounded">HOVER</button>
-                        </div>
+                    <label class="text-[10px] font-bold text-slate-500 uppercase block mt-4">Interaction</label>
+                    <div class="grid grid-cols-2 gap-2 mt-1">
+                        <button onclick="setTrigger('loop')" id="loopBtn" class="bg-teal-600 text-[10px] font-bold py-2 rounded">LOOP</button>
+                        <button onclick="setTrigger('hover')" id="hoverBtn" class="bg-slate-800 text-[10px] font-bold py-2 rounded">HOVER</button>
                     </div>
-                </div>
-            </section>
+
+                    <label class="text-[10px] font-bold text-slate-500 uppercase block mt-4">Canvas Theme</label>
+                    <div class="grid grid-cols-3 gap-2 mt-1">
+                        <button onclick="setTheme('dark')" class="h-6 bg-slate-950 border border-slate-700 rounded"></button>
+                        <button onclick="setTheme('light')" class="h-6 bg-white border border-slate-300 rounded"></button>
+                        <button onclick="setTheme('check')" class="h-6 bg-checker border border-slate-700 rounded"></button>
+                    </div>
+                </section>
+            </div>
         </aside>
 
-        <main class="flex-1 canvas-bg flex flex-col items-center justify-center p-12 relative">
-            <div id="previewContainer" class="p-8 transition-all duration-300"></div>
-            <div class="absolute bottom-8 bg-slate-900 border border-slate-800 px-4 py-2 rounded-full text-[10px] text-slate-400">
-                Canvas Preview Mode: <span id="modeDisplay" class="text-teal-400">Looping</span>
-            </div>
+        <main id="canvas" class="flex-1 canvas-grid flex items-center justify-center relative bg-slate-950 transition-colors duration-500">
+            <div id="previewContainer"></div>
         </main>
 
-        <aside class="w-96 border-l border-slate-800 bg-slate-900/50 p-6 flex flex-col">
-            <div class="flex justify-between items-center mb-4">
-                <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Generated Snippet</span>
-                <button onclick="copyCode()" class="text-[10px] bg-teal-600 px-3 py-1 rounded font-bold hover:bg-teal-500 transition">COPY</button>
-            </div>
-            <div class="flex-1 bg-black/50 border border-slate-800 rounded-lg p-4 font-mono text-[10px] text-teal-200 overflow-auto">
-                <pre id="codeSnippet"></pre>
+        <aside class="w-96 border-l border-slate-800 bg-slate-900 flex flex-col">
+            <div class="p-6 flex-1 flex flex-col">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Embed Code</h3>
+                    <button onclick="copyCode()" class="text-[10px] bg-teal-600 px-3 py-1 rounded font-bold hover:bg-teal-500">COPY</button>
+                </div>
+                <div class="flex-1 bg-black/50 border border-slate-800 rounded-xl p-4 font-mono text-[10px] text-teal-300 overflow-auto">
+                    <pre id="codeSnippet" class="whitespace-pre-wrap"></pre>
+                </div>
             </div>
         </aside>
     </div>
 
     <script>
         let trigger = 'loop';
-        const selectors = ['svgUrl', 'animType', 'duration'];
-        const els = {};
-        selectors.forEach(id => els[id] = document.getElementById(id));
+        const keyframes = {
+            // ESSENTIALS
+            pulse: '0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); }',
+            spin: 'from { transform: rotate(0deg); } to { transform: rotate(360deg); }',
+            float: '0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); }',
+            bounce: '0%, 20%, 50%, 80%, 100% { transform: translateY(0); } 40% { transform: translateY(-30px); } 60% { transform: translateY(-15px); }',
+            shake: '0%, 100% { transform: translateX(0); } 25% { transform: translateX(-8px); } 75% { transform: translateX(8px); }',
+            swing: '20% { transform: rotate(15deg); } 40% { transform: rotate(-10deg); } 60% { transform: rotate(5deg); } 80% { transform: rotate(-5deg); } 100% { transform: rotate(0deg); }',
+            zoom: '0% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.2); opacity: 0.8; } 100% { transform: scale(1); opacity: 1; }',
+            slide: '0% { transform: translateX(-50px); opacity: 0; } 100% { transform: translateX(0); opacity: 1; }',
+            tada: '0% { transform: scale(1); } 10%, 20% { transform: scale(0.9) rotate(-3deg); } 30%, 50%, 70%, 90% { transform: scale(1.1) rotate(3deg); } 40%, 60%, 80% { transform: scale(1.1) rotate(-3deg); } 100% { transform: scale(1) rotate(0); }',
+            jello: '11.1% { transform: none; } 22.2% { transform: skewX(-12.5deg) skewY(-12.5deg); } 33.3% { transform: skewX(6.25deg) skewY(6.25deg); } 44.4% { transform: skewX(-3.125deg) skewY(-3.125deg); } 55.5% { transform: skewX(1.5625deg) skewY(1.5625deg); } 100% { transform: none; }',
+            // PRO
+            morph: '0%, 100% { border-radius: 50%; } 50% { border-radius: 30% 70% 70% 30%; transform: scale(1.1); }',
+            flip: 'from { transform: perspective(400px) rotateY(0); } to { transform: perspective(400px) rotateY(360deg); }',
+            glitch: '0% { transform: translate(0); } 20% { transform: translate(-5px, 5px); } 40% { transform: translate(-5px, -5px); } 60% { transform: translate(5px, 5px); } 80% { transform: translate(5px, -5px); } 100% { transform: translate(0); }',
+            glaze: 'from { filter: hue-rotate(0deg); } to { filter: hue-rotate(360deg); }',
+            neon: 'from { filter: drop-shadow(0 0 2px #2dd4bf); } to { filter: drop-shadow(0 0 20px #2dd4bf); }',
+            flash: '0%, 50%, 100% { opacity: 1; } 25%, 75% { opacity: 0.2; }',
+            rubber: '0% { transform: scale3d(1, 1, 1); } 30% { transform: scale3d(1.25, 0.75, 1); } 40% { transform: scale3d(0.75, 1.25, 1); } 50% { transform: scale3d(1.15, 0.85, 1); } 100% { transform: scale3d(1, 1, 1); }',
+            blur: '0%, 100% { filter: blur(0px); opacity: 1; } 50% { filter: blur(8px); opacity: 0.5; }',
+            skew: '0%, 100% { transform: skew(0deg); } 50% { transform: skew(20deg, 10deg); }',
+            portal: '0% { transform: scale(1) rotate(0); filter: brightness(1); } 50% { transform: scale(0.1) rotate(180deg); filter: brightness(2); } 100% { transform: scale(1) rotate(360deg); filter: brightness(1); }'
+        };
 
         function setTrigger(t) {
             trigger = t;
-            document.getElementById('loopBtn').classList.toggle('bg-teal-600', t==='loop');
-            document.getElementById('loopBtn').classList.toggle('bg-slate-800', t!=='loop');
-            document.getElementById('hoverBtn').classList.toggle('bg-teal-600', t==='hover');
-            document.getElementById('hoverBtn').classList.toggle('bg-slate-800', t!=='hover');
-            document.getElementById('modeDisplay').innerText = t === 'loop' ? 'Looping' : 'On Hover';
+            document.getElementById('loopBtn').className = t === 'loop' ? 'bg-teal-600 text-[10px] font-bold py-2 rounded' : 'bg-slate-800 text-[10px] font-bold py-2 rounded';
+            document.getElementById('hoverBtn').className = t === 'hover' ? 'bg-teal-600 text-[10px] font-bold py-2 rounded' : 'bg-slate-800 text-[10px] font-bold py-2 rounded';
             update();
         }
 
+        function setTheme(theme) {
+            const c = document.getElementById('canvas');
+            c.className = 'flex-1 canvas-grid flex items-center justify-center relative transition-all duration-500';
+            if(theme === 'dark') c.classList.add('bg-slate-950');
+            if(theme === 'light') c.classList.add('bg-white');
+            if(theme === 'check') c.classList.add('bg-checker');
+        }
+
         function update() {
-            const url = els.svgUrl.value;
-            const anim = els.animType.value;
-            const dur = els.duration.value;
+            const url = document.getElementById('svgUrl').value;
+            const anim = document.getElementById('animType').value;
+            const dur = document.getElementById('duration').value;
             document.getElementById('durLabel').innerText = dur + 's';
 
-            const keyframes = {
-                pulse: '0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); }',
-                spin: 'from { transform: rotate(0deg); } to { transform: rotate(360deg); }',
-                float: '0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); }',
-                morph: '0%, 100% { border-radius: 50%; transform: scale(1); } 50% { border-radius: 30% 70% 70% 30%; transform: scale(1.1); }',
-                hue: 'from { filter: hue-rotate(0deg); } to { filter: hue-rotate(360deg); }',
-                flip: '0% { transform: perspective(400px) rotateY(0); } 100% { transform: perspective(400px) rotateY(360deg); }'
-            };
-
-            const embed = `
-<div class="svga-box" style="display:inline-block; transition: all 0.3s ease;">
-  <img src="${url}" class="svga-el">
+            const embed = `<div class="svga-box" style="display:inline-block;">
+  <img src="${url}" class="svga-it">
   <style>
-    .svga-el { 
-        width: 100px; height: 100px; 
-        ${trigger === 'loop' ? `animation: svga-kf ${dur}s infinite ease-in-out;` : 'transition: all 0.3s ease;'}
-    }
-    ${trigger === 'hover' ? `.svga-box:hover .svga-el { animation: svga-kf ${dur}s infinite ease-in-out; }` : ''}
-    @keyframes svga-kf { ${keyframes[anim]} }
+    .svga-it { width: 100px; height: 100px; ${trigger === 'loop' ? `animation: kf ${dur}s infinite ease-in-out;` : 'transition: all 0.3s;'} }
+    ${trigger === 'hover' ? `.svga-box:hover .svga-it { animation: kf ${dur}s infinite ease-in-out; }` : ''}
+    @keyframes kf { ${keyframes[anim]} }
   </style>
 </div>`;
 
@@ -137,12 +159,7 @@
             document.getElementById('codeSnippet').innerText = embed;
         }
 
-        function copyCode() {
-            navigator.clipboard.writeText(document.getElementById('codeSnippet').innerText);
-            alert("Copied to clipboard!");
-        }
-
-        selectors.forEach(id => els[id].addEventListener('input', update));
+        ['svgUrl', 'animType', 'duration'].forEach(id => document.getElementById(id).addEventListener('input', update));
         update();
     </script>
 </body>
