@@ -3,59 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SVG Animata Ultra | Custom Starter</title>
+    <title>SVG Animata | Morph Edition</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         .canvas-grid { background-image: radial-gradient(#334155 1px, transparent 1px); background-size: 30px 30px; }
         .bg-checker { background-image: conic-gradient(#e5e7eb 25%, #ffffff 0 50%, #e5e7eb 0 75%, #ffffff 0); background-size: 20px 20px; }
         ::-webkit-scrollbar { width: 5px; }
         ::-webkit-scrollbar-thumb { background: #14b8a6; border-radius: 10px; }
-        /* Smooth transitions for the preview asset */
-        .svga-it { transition: filter 0.3s ease, transform 0.3s ease; }
+        
+        /* Morph Logic */
+        .morph-container { position: relative; width: 150px; height: 150px; }
+        .morph-asset { position: absolute; top: 0; left: 0; width: 100%; height: 100%; transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1); }
+        .asset-b { opacity: 0; transform: scale(0.5) rotate(-20deg); filter: blur(10px); }
+
+        /* Triggering the Morph */
+        .morph-active .asset-a { opacity: 0; transform: scale(1.5) rotate(20deg); filter: blur(10px); }
+        .morph-active .asset-b { opacity: 1; transform: scale(1) rotate(0deg); filter: blur(0px); }
     </style>
 </head>
 <body class="bg-slate-950 text-slate-200 min-h-screen font-sans overflow-hidden">
 
     <div class="flex h-screen">
-        <aside class="w-80 border-r border-slate-800 bg-slate-900 flex flex-col shadow-2xl z-10">
-            <div class="p-6 border-b border-slate-800 bg-slate-900/50">
-                <h1 class="text-2xl font-black text-teal-400 tracking-tighter italic">SVG ANIMATA</h1>
-                <p class="text-[10px] text-slate-500 font-bold uppercase tracking-widest">Ultra Edition 2.0</p>
+        <aside class="w-80 border-r border-slate-800 bg-slate-900 flex flex-col shadow-2xl z-10 overflow-y-auto">
+            <div class="p-6 border-b border-slate-800">
+                <h1 class="text-xl font-black text-teal-400 italic">SVG ANIMATA MORPH</h1>
             </div>
 
-            <div class="p-6 space-y-6 overflow-y-auto flex-1">
+            <div class="p-6 space-y-6">
                 <section>
-                    <label class="text-[10px] font-bold text-slate-500 uppercase">SVG Source URL</label>
-                    <input type="text" id="svgUrl" value="https://lizducos.princegeorgedesign.com/wp-content/uploads/2026/02/dd3.svg" 
-                        class="w-full bg-slate-950 border border-slate-700 rounded-lg p-3 text-xs mt-2 outline-none focus:border-teal-400">
+                    <label class="text-[10px] font-bold text-slate-500 uppercase">Primary SVG (A)</label>
+                    <input type="text" id="svgUrlA" value="https://lizducos.princegeorgedesign.com/wp-content/uploads/2026/02/dd3.svg" 
+                        class="w-full bg-slate-950 border border-slate-700 rounded-lg p-3 text-[10px] mt-2 outline-none focus:border-teal-400">
                 </section>
 
                 <section>
-                    <label class="text-[10px] font-bold text-slate-500 uppercase">Animation Library</label>
-                    <select id="animType" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-3 text-xs mt-2 outline-none cursor-pointer">
-                        <optgroup label="Standard Essentials (10)">
-                            <option value="pulse">Pulse</option>
-                            <option value="spin">Spin</option>
-                            <option value="float">Float</option>
-                            <option value="bounce">Bounce</option>
-                            <option value="shake">Shake</option>
-                            <option value="swing">Swing</option>
-                            <option value="zoom">Soft Zoom</option>
-                            <option value="slide">Slide In</option>
-                            <option value="tada">Tada!</option>
-                            <option value="jello">Jello</option>
+                    <label class="text-[10px] font-bold text-slate-400 uppercase">Secondary SVG (B)</label>
+                    <input type="text" id="svgUrlB" value="https://api.iconify.design/logos:figma.svg" 
+                        class="w-full bg-slate-950 border border-teal-900/50 rounded-lg p-3 text-[10px] mt-2 outline-none focus:border-teal-400">
+                </section>
+
+                <section>
+                    <label class="text-[10px] font-bold text-slate-500 uppercase">Base Animation (20 Styles)</label>
+                    <select id="animType" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-3 text-xs mt-2 outline-none">
+                        <optgroup label="Standard (10)">
+                            <option value="pulse">Pulse</option><option value="spin">Spin</option><option value="float">Float</option>
+                            <option value="bounce">Bounce</option><option value="shake">Shake</option><option value="swing">Swing</option>
+                            <option value="zoom">Soft Zoom</option><option value="slide">Slide In</option><option value="tada">Tada!</option><option value="jello">Jello</option>
                         </optgroup>
-                        <optgroup label="Pro Effects (10)">
-                            <option value="morph">Liquid Morph</option>
-                            <option value="flip">3D Flip</option>
-                            <option value="glitch">Cyber Glitch</option>
-                            <option value="glaze">Color Glaze</option>
-                            <option value="neon">Neon Glow</option>
-                            <option value="flash">Strobe Flash</option>
-                            <option value="rubber">Rubber Band</option>
-                            <option value="blur">Focus Fade</option>
-                            <option value="skew">Skew Warp</option>
-                            <option value="portal">Portal Spin</option>
+                        <optgroup label="Pro (10)">
+                            <option value="morph">Liquid Morph</option><option value="flip">3D Flip</option><option value="glitch">Cyber Glitch</option>
+                            <option value="glaze">Color Glaze</option><option value="neon">Neon Glow</option><option value="flash">Strobe Flash</option>
+                            <option value="rubber">Rubber Band</option><option value="blur">Focus Fade</option><option value="skew">Skew Warp</option><option value="portal">Portal Spin</option>
                         </optgroup>
                     </select>
                 </section>
@@ -67,42 +65,31 @@
                     </div>
                     <input type="range" id="duration" min="0.1" max="4" step="0.1" value="1.2" class="w-full h-1 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-teal-500">
                     
-                    <label class="text-[10px] font-bold text-slate-500 uppercase block mt-4">Interaction</label>
-                    <div class="grid grid-cols-2 gap-2 mt-1">
-                        <button onclick="setTrigger('loop')" id="loopBtn" class="bg-teal-600 text-[10px] font-bold py-2 rounded">LOOP</button>
-                        <button onclick="setTrigger('hover')" id="hoverBtn" class="bg-slate-800 text-[10px] font-bold py-2 rounded">HOVER</button>
-                    </div>
-
-                    <label class="text-[10px] font-bold text-slate-500 uppercase block mt-4">Canvas Theme</label>
-                    <div class="grid grid-cols-3 gap-2 mt-1">
-                        <button onclick="setTheme('dark')" class="h-6 bg-slate-950 border border-slate-700 rounded shadow-inner" title="Dark Mode"></button>
-                        <button onclick="setTheme('light')" class="h-6 bg-white border border-slate-300 rounded shadow-inner" title="Light Mode"></button>
-                        <button onclick="setTheme('check')" class="h-6 bg-checker border border-slate-700 rounded shadow-inner" title="Transparency Grid"></button>
+                    <div class="pt-4">
+                        <button id="morphBtn" onclick="toggleMorph()" class="w-full py-3 bg-gradient-to-r from-teal-600 to-blue-600 rounded-lg font-bold text-xs shadow-lg hover:scale-105 transition-transform">
+                            TEST MORPH TRANSITION
+                        </button>
                     </div>
                 </section>
             </div>
         </aside>
 
-        <main id="canvas" class="flex-1 canvas-grid flex items-center justify-center relative bg-slate-950 transition-colors duration-500">
-            <div id="previewContainer"></div>
+        <main class="flex-1 canvas-grid flex items-center justify-center relative bg-slate-950">
+            <div id="previewContainer" class="p-16 rounded-full bg-slate-900/40 border border-slate-800 shadow-2xl">
+                </div>
         </main>
 
-        <aside class="w-96 border-l border-slate-800 bg-slate-900 flex flex-col">
-            <div class="p-6 flex-1 flex flex-col">
-                <div class="flex justify-between items-center mb-4">
-                    <h3 class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Embed Code</h3>
-                    <button onclick="copyCode()" class="text-[10px] bg-teal-600 px-3 py-1 rounded font-bold hover:bg-teal-500 transition-colors">COPY</button>
-                </div>
-                <div class="flex-1 bg-black/50 border border-slate-800 rounded-xl p-4 font-mono text-[10px] text-teal-300 overflow-auto border-dashed">
-                    <pre id="codeSnippet" class="whitespace-pre-wrap"></pre>
-                </div>
-                <p class="text-[9px] text-slate-600 mt-4 leading-relaxed italic">Note: The "Hover" trigger uses a container wrapper to ensure stability during motion.</p>
+        <aside class="w-96 border-l border-slate-800 bg-slate-900 p-6 flex flex-col">
+            <h3 class="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-4">Morph Embed Code</h3>
+            <div class="flex-1 bg-black/50 border border-slate-800 rounded-xl p-4 font-mono text-[10px] text-teal-300 overflow-auto">
+                <pre id="codeSnippet" class="whitespace-pre-wrap"></pre>
             </div>
+            <button onclick="copyCode()" class="mt-4 w-full py-2 bg-slate-800 rounded font-bold text-xs hover:bg-teal-600 transition">COPY CODE</button>
         </aside>
     </div>
 
     <script>
-        let trigger = 'loop';
+        let isMorphed = false;
         const keyframes = {
             pulse: '0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); }',
             spin: 'from { transform: rotate(0deg); } to { transform: rotate(360deg); }',
@@ -126,47 +113,43 @@
             portal: '0% { transform: scale(1) rotate(0); filter: brightness(1); } 50% { transform: scale(0.1) rotate(180deg); filter: brightness(2); } 100% { transform: scale(1) rotate(360deg); filter: brightness(1); }'
         };
 
-        function setTrigger(t) {
-            trigger = t;
-            document.getElementById('loopBtn').className = t === 'loop' ? 'bg-teal-600 text-[10px] font-bold py-2 rounded transition-all' : 'bg-slate-800 text-[10px] font-bold py-2 rounded transition-all';
-            document.getElementById('hoverBtn').className = t === 'hover' ? 'bg-teal-600 text-[10px] font-bold py-2 rounded transition-all' : 'bg-slate-800 text-[10px] font-bold py-2 rounded transition-all';
+        function toggleMorph() {
+            isMorphed = !isMorphed;
+            document.getElementById('previewContainer').classList.toggle('morph-active', isMorphed);
             update();
         }
 
-        function setTheme(theme) {
-            const c = document.getElementById('canvas');
-            c.className = 'flex-1 canvas-grid flex items-center justify-center relative transition-all duration-500';
-            if(theme === 'dark') c.classList.add('bg-slate-950');
-            if(theme === 'light') c.classList.add('bg-white');
-            if(theme === 'check') c.classList.add('bg-checker');
-        }
-
         function update() {
-            const url = document.getElementById('svgUrl').value;
+            const urlA = document.getElementById('svgUrlA').value;
+            const urlB = document.getElementById('svgUrlB').value;
             const anim = document.getElementById('animType').value;
             const dur = document.getElementById('duration').value;
             document.getElementById('durLabel').innerText = dur + 's';
 
-            const embed = `<div class="svga-box" style="display:inline-block; line-height:0;">
-  <img src="${url}" class="svga-it">
+            const embed = `
+<div class="svga-morph-wrapper ${isMorphed ? 'morph-active' : ''}">
+  <div class="svga-inner-anim">
+    <img src="${urlA}" class="svga-asset asset-a">
+    <img src="${urlB}" class="svga-asset asset-b">
+  </div>
   <style>
-    .svga-it { 
-      width: 100px; 
-      height: 100px; 
-      ${trigger === 'loop' ? `animation: kf-svga ${dur}s infinite ease-in-out;` : 'transition: all 0.3s ease;'} 
-    }
-    ${trigger === 'hover' ? `.svga-box:hover .svga-it { animation: kf-svga ${dur}s infinite ease-in-out; }` : ''}
-    @keyframes kf-svga { ${keyframes[anim]} }
+    .svga-morph-wrapper { position: relative; width: 120px; height: 120px; cursor: pointer; }
+    .svga-inner-anim { width: 100%; height: 100%; animation: kf-main ${dur}s infinite ease-in-out; }
+    .svga-asset { position: absolute; inset: 0; width: 100%; height: 100%; transition: all 0.8s ease; }
+    .asset-b { opacity: 0; transform: scale(0.5) rotate(-20deg); filter: blur(10px); }
+    
+    .morph-active .asset-a { opacity: 0; transform: scale(1.5) rotate(20deg); filter: blur(10px); }
+    .morph-active .asset-b { opacity: 1; transform: scale(1) rotate(0deg); filter: blur(0px); }
+    
+    @keyframes kf-main { ${keyframes[anim]} }
   </style>
 </div>`;
 
             document.getElementById('previewContainer').innerHTML = embed;
-            document.getElementById('codeSnippet').innerText = embed;
+            document.getElementById('codeSnippet').innerText = embed.trim();
         }
 
-        ['svgUrl', 'animType', 'duration'].forEach(id => document.getElementById(id).addEventListener('input', update));
-        
-        // Initial setup
+        ['svgUrlA', 'svgUrlB', 'animType', 'duration'].forEach(id => document.getElementById(id).addEventListener('input', update));
         update();
     </script>
 </body>
