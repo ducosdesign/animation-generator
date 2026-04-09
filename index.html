@@ -3,16 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SVG Animata | Fracture Engine 8.0</title>
+    <title>SVG Animata | Ultimate 8.5</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         .canvas-grid { background-image: radial-gradient(#334155 1px, transparent 1px); background-size: 30px 30px; }
         .bg-checker { background-image: conic-gradient(#e5e7eb 25%, #ffffff 0 50%, #e5e7eb 0 75%, #ffffff 0); background-size: 12px 12px; }
         ::-webkit-scrollbar { width: 4px; }
         ::-webkit-scrollbar-thumb { background: #14b8a6; border-radius: 10px; }
-        #previewContainer svg { width: 100%; height: 100%; display: block; overflow: visible !important; }
-        .preset-btn { transition: all 0.2s; border: 1px solid #334155; }
-        .preset-btn:hover { border-color: #14b8a6; background: #134e4a; }
+        .svga-it { display: block; object-fit: contain; }
     </style>
 </head>
 <body class="bg-slate-950 text-slate-200 min-h-screen font-sans overflow-hidden">
@@ -21,38 +19,26 @@
         <aside class="w-80 border-r border-slate-800 bg-slate-900 flex flex-col shadow-2xl overflow-y-auto">
             <div class="p-6 border-b border-slate-800 bg-slate-900/50">
                 <h1 class="text-xl font-black text-teal-400 italic tracking-tighter">SVG ANIMATA</h1>
-                <p class="text-[9px] text-slate-500 font-bold uppercase tracking-[0.2em]">Fracture Engine v8.0</p>
+                <p class="text-[9px] text-slate-500 font-bold uppercase tracking-[0.2em]">Stable Engine v8.5</p>
             </div>
 
             <div class="p-6 space-y-6">
                 <div>
-                    <div class="flex justify-between items-end mb-2">
-                        <label class="text-[10px] font-bold text-slate-500 uppercase">1. SVG Source URL</label>
-                        <a href="https://simpleicons.org/" target="_blank" class="text-[9px] text-teal-500 hover:underline font-bold">Find Logos →</a>
-                    </div>
-                    <input type="text" id="svgUrl" value="https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/framer.svg" 
+                    <label class="text-[10px] font-bold text-slate-500 uppercase block mb-2">1. SVG Source URL</label>
+                    <input type="text" id="svgUrl" value="https://lizducos.princegeorgedesign.com/wp-content/uploads/2026/02/dd3.svg" 
                         class="w-full bg-slate-950 border border-slate-700 rounded-lg p-3 text-[10px] outline-none focus:border-teal-500 transition-all">
                 </div>
 
                 <div>
-                    <label class="text-[10px] font-bold text-slate-500 uppercase block mb-2">Presets</label>
-                    <div class="grid grid-cols-3 gap-2">
-                        <button onclick="loadPreset('react')" class="preset-btn bg-slate-950 text-[9px] py-1 rounded">React</button>
-                        <button onclick="loadPreset('github')" class="preset-btn bg-slate-950 text-[9px] py-1 rounded">GitHub</button>
-                        <button onclick="loadPreset('framer')" class="preset-btn bg-slate-950 text-[9px] py-1 rounded">Framer</button>
-                    </div>
-                </div>
-
-                <div>
                     <div class="flex justify-between text-[10px] font-bold text-slate-500 uppercase mb-2">
-                        <span>2. Scale</span>
-                        <span id="sizeLabel" class="text-teal-400">180px</span>
+                        <span>2. Dimensions</span>
+                        <span id="sizeLabel" class="text-teal-400">150px</span>
                     </div>
-                    <input type="range" id="svgSize" min="40" max="500" step="10" value="180" class="w-full h-1 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-teal-500">
+                    <input type="range" id="svgSize" min="20" max="600" step="5" value="150" class="w-full h-1 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-teal-500">
                 </div>
 
                 <div>
-                    <label class="text-[10px] font-bold text-slate-500 uppercase block mb-2">3. Animation Engine</label>
+                    <label class="text-[10px] font-bold text-slate-500 uppercase block mb-2">3. Animation Style</label>
                     <select id="animType" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-3 text-xs outline-none cursor-pointer">
                         <optgroup label="Fracture & Split">
                             <option value="slice_v">Vertical Slice</option>
@@ -66,33 +52,37 @@
                             <option value="vortex">Vortex Spin</option>
                             <option value="glitch">Cyber Glitch</option>
                             <option value="electric">Electric Storm</option>
+                            <option value="quantum">Quantum Leap</option>
                         </optgroup>
                         <optgroup label="Pro Effects">
                             <option value="liquid">Liquid Wobble</option>
                             <option value="orbit_3d">3D Orbit</option>
                             <option value="neon">Neon Glow</option>
                             <option value="blur">Focus Blur</option>
+                            <option value="prism">Prism Shift</option>
                         </optgroup>
                         <optgroup label="Standard">
                             <option value="pulse">Pulse</option>
                             <option value="spin">Spin</option>
                             <option value="float">Float</option>
                             <option value="bounce">Bounce</option>
+                            <option value="shake">Shake</option>
+                            <option value="tada">Tada!</option>
                         </optgroup>
                     </select>
                 </div>
 
-                <div class="grid grid-cols-1 gap-4">
+                <div class="space-y-4">
                     <div>
-                        <label class="text-[10px] font-bold text-slate-500 uppercase block mb-2">4. Interaction</label>
+                        <label class="text-[10px] font-bold text-slate-500 uppercase block mb-2">4. Trigger Type</label>
                         <div class="grid grid-cols-2 gap-2">
-                            <button onclick="setTrigger('loop')" id="loopBtn" class="bg-teal-600 py-2 rounded text-[10px] font-bold">LOOP</button>
-                            <button onclick="setTrigger('hover')" id="hoverBtn" class="bg-slate-800 py-2 rounded text-[10px] font-bold">HOVER</button>
+                            <button onclick="setTrigger('loop')" id="loopBtn" class="bg-teal-600 py-2 rounded text-[10px] font-bold transition-all">LOOP</button>
+                            <button onclick="setTrigger('hover')" id="hoverBtn" class="bg-slate-800 py-2 rounded text-[10px] font-bold transition-all">HOVER</button>
                         </div>
                     </div>
                     <div>
                         <div class="flex justify-between text-[10px] font-bold text-slate-500 uppercase mb-2">
-                            <span>5. Duration</span>
+                            <span>5. Speed</span>
                             <span id="durLabel" class="text-teal-400">1.5s</span>
                         </div>
                         <input type="range" id="duration" min="0.1" max="5" step="0.1" value="1.5" class="w-full h-1 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-teal-500">
@@ -100,19 +90,20 @@
                 </div>
 
                 <div class="pt-6 border-t border-slate-800 space-y-3">
-                    <h2 class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Guide</h2>
+                    <h2 class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Instructions</h2>
                     <ul class="space-y-3 text-[11px] text-slate-400 leading-snug">
-                        <li class="flex gap-2 items-start"><span class="text-teal-500">✔</span><span>Paste any direct <b>.svg</b> link.</span></li>
-                        <li class="flex gap-2 items-start"><span class="text-teal-500">✔</span><span>Switch between <b>Loop</b> and <b>Hover</b>.</span></li>
-                        <li class="flex gap-2 items-start"><span class="text-teal-500">✔</span><span>CORS proxy is active for cross-domain logos.</span></li>
+                        <li class="flex gap-2 items-start"><span class="text-teal-500">✔</span><span>Paste a direct link to a <b>.svg</b> file.</span></li>
+                        <li class="flex gap-2 items-start"><span class="text-teal-500">✔</span><span>Toggle between <b>Loop</b> and <b>Hover</b> interaction.</span></li>
+                        <li class="flex gap-2 items-start"><span class="text-teal-500">✔</span><span>Adjust size and speed to fit your layout.</span></li>
                     </ul>
                 </div>
             </div>
         </aside>
 
         <main id="canvas" class="flex-1 canvas-grid flex items-center justify-center relative bg-slate-950 transition-all duration-500">
-            <div id="previewContainer" class="flex items-center justify-center"></div>
-            <div class="absolute bottom-8 flex gap-3 bg-slate-900/80 backdrop-blur-md p-2 rounded-full border border-slate-800">
+            <div id="previewContainer"></div>
+            
+            <div class="absolute bottom-8 flex gap-3 bg-slate-900/80 backdrop-blur-md p-2 rounded-full border border-slate-800 shadow-2xl">
                 <button onclick="setTheme('dark')" class="w-6 h-6 bg-slate-950 rounded-full border border-slate-700"></button>
                 <button onclick="setTheme('light')" class="w-6 h-6 bg-white rounded-full border border-slate-300"></button>
                 <button onclick="setTheme('check')" class="w-6 h-6 bg-checker rounded-full border border-slate-700"></button>
@@ -121,11 +112,11 @@
 
         <aside class="w-96 border-l border-slate-800 bg-slate-900 flex flex-col p-6 shadow-2xl">
             <div class="flex justify-between items-center mb-4">
-                <h3 class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Output Code</h3>
-                <button onclick="copyCode()" class="text-[10px] bg-teal-600 px-4 py-1.5 rounded-full font-bold hover:bg-teal-500">COPY</button>
+                <h3 class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Self-Contained Code</h3>
+                <button onclick="copyCode()" class="text-[10px] bg-teal-600 px-4 py-1.5 rounded-full font-bold hover:bg-teal-500 shadow-lg">COPY</button>
             </div>
-            <div class="flex-1 bg-black/50 border border-slate-800 rounded-xl p-5 font-mono text-[11px] text-teal-200/80 overflow-auto">
-                <pre id="codeSnippet" class="whitespace-pre-wrap break-all"></pre>
+            <div class="flex-1 bg-black/50 border border-slate-800 rounded-xl p-5 font-mono text-[11px] text-teal-200/80 overflow-auto border-dashed">
+                <pre id="codeSnippet" class="whitespace-pre-wrap"></pre>
             </div>
         </aside>
     </div>
@@ -142,31 +133,24 @@
             vortex: '0% { transform: rotate(0deg) scale(1); filter: blur(0px); } 50% { transform: rotate(180deg) scale(0.1); filter: blur(10px); } 100% { transform: rotate(360deg) scale(1); filter: blur(0px); }',
             glitch: '0% { clip-path: inset(43% 0 30% 0); transform: translate(-5px, 5px); } 10% { clip-path: inset(10% 0 60% 0); transform: translate(5px, -5px); } 20% { clip-path: none; }',
             electric: '0%, 100% { filter: brightness(1); } 10%, 90% { filter: brightness(3) drop-shadow(0 0 10px white); transform: skewX(-15deg); } 20%, 80% { transform: skewX(15deg); }',
+            quantum: '0% { transform: scale(1) skew(0); } 20% { transform: scale(0.8) skew(10deg); opacity: 0.5; } 50% { transform: scale(1.2) skew(-10deg); } 100% { transform: scale(1) skew(0); }',
             liquid: '0%, 100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; transform: scale(1); } 50% { border-radius: 30% 60% 70% 30% / 50% 60% 30% 60%; transform: scale(1.1); }',
             orbit_3d: 'from { transform: perspective(500px) rotate3d(1, 1, 0, 0deg); } to { transform: perspective(500px) rotate3d(1, 1, 0, 360deg); }',
-            neon: 'from { filter: drop-shadow(0 0 2px #2dd4bf); } to { filter: drop-shadow(0 0 25px #2dd4bf); }',
+            neon: 'from { filter: drop-shadow(0 0 2px #2dd4bf); } to { filter: drop-shadow(0 0 20px #2dd4bf); }',
             blur: '0%, 100% { filter: blur(0px); opacity: 1; } 50% { filter: blur(10px); opacity: 0.4; }',
+            prism: '0% { filter: hue-rotate(0deg); } 50% { filter: hue-rotate(180deg) saturate(3); } 100% { filter: hue-rotate(360deg); }',
             pulse: '0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); }',
             spin: 'from { transform: rotate(0deg); } to { transform: rotate(360deg); }',
             float: '0%, 100% { transform: translateY(0); } 50% { transform: translateY(-25px); }',
-            bounce: '0%, 20%, 50%, 80%, 100% { transform: translateY(0); } 40% { transform: translateY(-35px); } 60% { transform: translateY(-15px); }'
+            bounce: '0%, 20%, 50%, 80%, 100% { transform: translateY(0); } 40% { transform: translateY(-35px); } 60% { transform: translateY(-15px); }',
+            shake: '0%, 100% { transform: translateX(0); } 25% { transform: translateX(-10px); } 75% { transform: translateX(10px); }',
+            tada: '0% { transform: scale(1); } 10%, 20% { transform: scale(0.9) rotate(-3deg); } 30%, 50%, 70%, 90% { transform: scale(1.2) rotate(3deg); } 40%, 60%, 80% { transform: scale(1.2) rotate(-3deg); } 100% { transform: scale(1) rotate(0); }'
         };
-
-        const presets = {
-            react: "https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/react.svg",
-            github: "https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/github.svg",
-            framer: "https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/framer.svg"
-        };
-
-        function loadPreset(key) {
-            document.getElementById('svgUrl').value = presets[key];
-            update();
-        }
 
         function setTrigger(t) {
             trigger = t;
-            document.getElementById('loopBtn').className = t === 'loop' ? 'bg-teal-600 py-2 rounded text-[10px] font-bold' : 'bg-slate-800 py-2 rounded text-[10px] font-bold';
-            document.getElementById('hoverBtn').className = t === 'hover' ? 'bg-teal-600 py-2 rounded text-[10px] font-bold' : 'bg-slate-800 py-2 rounded text-[10px] font-bold';
+            document.getElementById('loopBtn').className = t === 'loop' ? 'bg-teal-600 py-2 rounded text-[10px] font-bold transition-all' : 'bg-slate-800 py-2 rounded text-[10px] font-bold transition-all';
+            document.getElementById('hoverBtn').className = t === 'hover' ? 'bg-teal-600 py-2 rounded text-[10px] font-bold transition-all' : 'bg-slate-800 py-2 rounded text-[10px] font-bold transition-all';
             update();
         }
 
@@ -178,48 +162,26 @@
             if(theme === 'check') c.classList.add('bg-checker');
         }
 
-        async function update() {
-            const urlInput = document.getElementById('svgUrl').value;
+        function update() {
+            const url = document.getElementById('svgUrl').value;
             const anim = document.getElementById('animType').value;
             const dur = document.getElementById('duration').value;
             const size = document.getElementById('svgSize').value;
             
             document.getElementById('durLabel').innerText = dur + 's';
             document.getElementById('sizeLabel').innerText = size + 'px';
-            document.getElementById('previewContainer').style.width = size + 'px';
-            document.getElementById('previewContainer').style.height = size + 'px';
 
-            const proxyUrl = "https://api.allorigins.win/get?url=" + encodeURIComponent(urlInput);
-
-            try {
-                const response = await fetch(proxyUrl);
-                const data = await response.json();
-                let svgContent = data.contents;
-
-                svgContent = svgContent.replace(/<svg/, '<svg class="svga-it"');
-
-                const embedCode = `<div class="svga-wrapper" style="display:inline-block; width:${size}px; height:${size}px;">
-    ${svgContent}
-    <style>
-        .svga-it { width: 100%; height: 100%; display: block; overflow: visible; ${trigger === 'loop' ? `animation: kf-svga ${dur}s infinite ease-in-out;` : 'transition: all 0.3s ease;'} }
-        ${trigger === 'hover' ? `.svga-wrapper:hover .svga-it { animation: kf-svga ${dur}s infinite ease-in-out; }` : ''}
-        @keyframes kf-svga { ${keyframeLib[anim]} }
-    </style>
+            const embed = `<div class="svga-box" style="display:inline-block; line-height:0;">
+  <img src="${url}" class="svga-it">
+  <style>
+    .svga-it { width: ${size}px; height: ${size}px; ${trigger === 'loop' ? `animation: kf-svga ${dur}s infinite ease-in-out;` : 'transition: all 0.4s ease-out;'} }
+    ${trigger === 'hover' ? `.svga-box:hover .svga-it { animation: kf-svga ${dur}s infinite ease-in-out; }` : ''}
+    @keyframes kf-svga { ${keyframeLib[anim]} }
+  </style>
 </div>`;
 
-                document.getElementById('previewContainer').innerHTML = svgContent;
-                const styleTag = document.createElement('style');
-                styleTag.innerHTML = `
-                    #previewContainer svg { ${trigger === 'loop' ? `animation: kf-svga ${dur}s infinite ease-in-out;` : 'transition: all 0.3s ease;'} }
-                    ${trigger === 'hover' ? `#previewContainer:hover svg { animation: kf-svga ${dur}s infinite ease-in-out; }` : ''}
-                    @keyframes kf-svga { ${keyframeLib[anim]} }
-                `;
-                document.getElementById('previewContainer').appendChild(styleTag);
-                document.getElementById('codeSnippet').innerText = embedCode;
-
-            } catch (e) {
-                document.getElementById('previewContainer').innerHTML = "<span class='text-red-500 text-[10px] font-bold'>LOAD ERROR</span>";
-            }
+            document.getElementById('previewContainer').innerHTML = embed;
+            document.getElementById('codeSnippet').innerText = embed;
         }
 
         function copyCode() {
