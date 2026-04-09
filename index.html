@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SVG Animata | Sidebar Editor</title>
+    <title>SVG Animata | Ultimate Pro Edition</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         .canvas-grid { background-image: radial-gradient(#334155 1px, transparent 1px); background-size: 30px 30px; }
@@ -20,28 +20,29 @@
             
             <div class="p-6 border-b border-slate-800 bg-slate-900/50">
                 <h1 class="text-xl font-black text-teal-400 italic tracking-tighter">SVG ANIMATA</h1>
-                <p class="text-[9px] text-slate-500 font-bold uppercase tracking-[0.2em]">Advanced Engine v3.0</p>
+                <p class="text-[9px] text-slate-500 font-bold uppercase tracking-[0.2em]">Ultimate Engine v4.0</p>
             </div>
 
             <div class="p-6 space-y-6">
                 <div>
                     <label class="text-[10px] font-bold text-slate-500 uppercase block mb-2">1. SVG Source URL</label>
                     <input type="text" id="svgUrl" value="https://lizducos.princegeorgedesign.com/wp-content/uploads/2026/02/dd3.svg" 
-                        class="w-full bg-slate-950 border border-slate-700 rounded-lg p-3 text-[10px] outline-none focus:border-teal-500 transition-all">
+                        class="w-full bg-slate-950 border border-slate-700 rounded-lg p-3 text-[10px] outline-none focus:border-teal-400 transition-all">
                 </div>
 
                 <div>
                     <label class="text-[10px] font-bold text-slate-500 uppercase block mb-2">2. Animation Style</label>
                     <select id="animType" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-3 text-xs outline-none cursor-pointer">
-                        <optgroup label="Advanced Pro">
+                        <optgroup label="Advanced & Ultra (Pro)">
                             <option value="liquid">Liquid Wobble</option>
                             <option value="hyper_glitch">Hyper Glitch</option>
                             <option value="orbit_3d">3D Orbit</option>
                             <option value="vortex">Vortex Spin</option>
                             <option value="ghost">Ghosting Fade</option>
                             <option value="shimmer">Golden Shimmer</option>
-                            <option value="ripple">Deep Ripple</option>
                             <option value="prism">Prism Shift</option>
+                            <option value="portal">Portal Spin</option>
+                            <option value="neon">Neon Glow</option>
                         </optgroup>
                         <optgroup label="Standard Essentials">
                             <option value="pulse">Pulse</option>
@@ -49,6 +50,11 @@
                             <option value="float">Float</option>
                             <option value="bounce">Bounce</option>
                             <option value="shake">Shake</option>
+                            <option value="swing">Swing</option>
+                            <option value="tada">Tada!</option>
+                            <option value="jello">Jello</option>
+                            <option value="rubber">Rubber Band</option>
+                            <option value="flash">Strobe Flash</option>
                         </optgroup>
                     </select>
                 </div>
@@ -117,19 +123,28 @@
     <script>
         let trigger = 'loop';
         const keyframeLib = {
+            // ADVANCED & ULTRA
             liquid: '0%, 100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; transform: scale(1); } 50% { border-radius: 30% 60% 70% 30% / 50% 60% 30% 60%; transform: scale(1.1) rotate(5deg); }',
             hyper_glitch: '0% { clip-path: inset(43% 0 30% 0); transform: translate(-5px, 5px); } 10% { clip-path: inset(10% 0 60% 0); transform: translate(5px, -5px); } 20% { clip-path: inset(80% 0 1% 0); transform: translate(-2px, 2px); } 30% { clip-path: none; transform: none; } 100% { clip-path: none; transform: none; }',
             orbit_3d: 'from { transform: perspective(500px) rotate3d(1, 1, 0, 0deg); } to { transform: perspective(500px) rotate3d(1, 1, 0, 360deg); }',
             vortex: '0% { transform: rotate(0deg) scale(1); filter: blur(0px); } 50% { transform: rotate(180deg) scale(0.2); filter: blur(4px); } 100% { transform: rotate(360deg) scale(1); filter: blur(0px); }',
             ghost: '0% { opacity: 1; transform: scale(1); } 50% { opacity: 0.3; transform: scale(1.5); filter: drop-shadow(0 0 15px #14b8a6); } 100% { opacity: 1; transform: scale(1); }',
             shimmer: '0% { filter: brightness(1); } 50% { filter: brightness(2) drop-shadow(0 0 10px gold); } 100% { filter: brightness(1); }',
-            ripple: '0% { transform: scale(1); filter: contrast(1); } 50% { transform: scale(1.1); filter: contrast(2) saturate(2); } 100% { transform: scale(1); filter: contrast(1); }',
             prism: '0% { filter: hue-rotate(0deg) saturate(1); } 50% { filter: hue-rotate(180deg) saturate(3); } 100% { filter: hue-rotate(360deg) saturate(1); }',
+            portal: '0% { transform: scale(1) rotate(0); filter: brightness(1); } 50% { transform: scale(0.1) rotate(180deg); filter: brightness(2); } 100% { transform: scale(1) rotate(360deg); filter: brightness(1); }',
+            neon: 'from { filter: drop-shadow(0 0 2px #2dd4bf); } to { filter: drop-shadow(0 0 20px #2dd4bf); }',
+            
+            // STANDARD
             pulse: '0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); }',
             spin: 'from { transform: rotate(0deg); } to { transform: rotate(360deg); }',
             float: '0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); }',
             bounce: '0%, 20%, 50%, 80%, 100% { transform: translateY(0); } 40% { transform: translateY(-30px); } 60% { transform: translateY(-15px); }',
-            shake: '0%, 100% { transform: translateX(0); } 25% { transform: translateX(-8px); } 75% { transform: translateX(8px); }'
+            shake: '0%, 100% { transform: translateX(0); } 25% { transform: translateX(-8px); } 75% { transform: translateX(8px); }',
+            swing: '20% { transform: rotate(15deg); } 40% { transform: rotate(-10deg); } 60% { transform: rotate(5deg); } 80% { transform: rotate(-5deg); } 100% { transform: rotate(0deg); }',
+            tada: '0% { transform: scale(1); } 10%, 20% { transform: scale(0.9) rotate(-3deg); } 30%, 50%, 70%, 90% { transform: scale(1.1) rotate(3deg); } 40%, 60%, 80% { transform: scale(1.1) rotate(-3deg); } 100% { transform: scale(1) rotate(0); }',
+            jello: '11.1% { transform: none; } 22.2% { transform: skewX(-12.5deg) skewY(-12.5deg); } 33.3% { transform: skewX(6.25deg) skewY(6.25deg); } 44.4% { transform: skewX(-3.125deg) skewY(-3.125deg); } 55.5% { transform: skewX(1.5625deg) skewY(1.5625deg); } 100% { transform: none; }',
+            rubber: '0% { transform: scale3d(1, 1, 1); } 30% { transform: scale3d(1.25, 0.75, 1); } 40% { transform: scale3d(0.75, 1.25, 1); } 50% { transform: scale3d(1.15, 0.85, 1); } 100% { transform: scale3d(1, 1, 1); }',
+            flash: '0%, 50%, 100% { opacity: 1; } 25%, 75% { opacity: 0.2; }'
         };
 
         function setTrigger(t) {
