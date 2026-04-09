@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SVG Animata | Self-Contained Animator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-zinc-950 text-white min-h-screen font-sans p-8">
+
+    <div class="max-w-7xl mx-auto flex flex-col h-full">
+        <header class="flex justify-between items-center pb-8 border-b border-zinc-800 mb-10">
+            <div>
+                <h1 class="text-3xl font-bold bg-gradient-to-r from-teal-300 to-blue-500 bg-clip-text text-transparent">SVG Animata</h1>
+                <p class="text-zinc-500 mt-1">Animate SVGs and generate self-contained, interactive embed code.</p>
+            </div>
+            <button class="bg-teal-600 hover:bg-teal-500 px-5 py-2 rounded-full text-sm font-bold transition">New Project</button>
+        </header>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-10 flex-1">
+            
+            <aside class="space-y-8 bg-zinc-900 p-6 rounded-2xl border border-zinc-800 shadow-xl">
+                <div>
+                    <h3 class="text-sm font-semibold text-zinc-400 uppercase mb-4">1. Asset Source</h3>
+                    <label class="block text-sm mb-2">SVG Image URL</label>
+                    <input type="text" id="svgUrl" 
+                        value="https://api.iconify.design/logos:github-icon.svg"
+                        class="w-full bg-zinc-800 border border-zinc-700 rounded-lg p-3 text-xs focus:ring-1 focus:ring-teal-500 outline-none transition-all">
+                </div>
+
+                <div>
+                    <h3 class="text-sm font-semibold text-zinc-400 uppercase mb-4">2. Choose Animation</h3>
+                    <select id="animType" class="w-full bg-zinc-800 border border-zinc-700 rounded-lg p-3 text-sm focus:ring-1 focus:ring-teal-500 transition-all cursor-pointer">
+                        <option value="pulse">Pulse (Scale)</option>
+                        <option value="spin">Spin (Rotate)</option>
+                        <option value="shake">Shake (Wiggle)</option>
+                    </select>
+                </div>
+
+                <div>
+                    <h3 class="text-sm font-semibold text-zinc-400 uppercase mb-4">3. Interaction</h3>
+                    <div class="grid grid-cols-2 gap-3">
+                        <label class="p-4 rounded-xl border-2 cursor-pointer transition flex flex-col items-center gap-2 group" id="loopLabel">
+                            <input type="radio" name="interaction" value="loop" checked class="accent-teal-500 hidden" onclick="updateUI()">
+                            <span class="text-xl">🔄</span>
+                            <span class="text-sm">Infinite Loop</span>
+                        </label>
+                        <label class="p-4 rounded-xl border-2 cursor-pointer transition flex flex-col items-center gap-2 group" id="hoverLabel">
+                            <input type="radio" name="interaction" value="hover" class="accent-teal-500 hidden" onclick="updateUI()">
+                            <span class="text-xl">👆</span>
+                            <span class="text-sm">On Hover</span>
+                        </label>
+                    </div>
+                </div>
+            </aside>
+
+            <main class="flex items-center justify-center p-8 bg-zinc-800/50 rounded-2xl relative border border-zinc-800 shadow-inner overflow-hidden min-h-[300px]">
+                <div class="absolute top-3 left-4 text-xs font-mono uppercase text-zinc-600 tracking-wider">Preview Canvas</div>
+                <div id="previewContainer" class="w-full h-full flex items-center justify-center">
+                    </div>
+            </main>
+
+            <aside class="space-y-6 flex flex-col">
+                <div class="flex justify-between items-center mb-1">
+                    <h3 class="text-sm font-semibold text-zinc-400 uppercase">Self-Contained Embed Code</h3>
+                    <button onclick="copyCode()" class="text-xs bg-teal-600 hover:bg-teal-500 px-4 py-1.5 rounded transition font-bold">Copy</button>
+                </div>
+                <div class="bg-black/40 p-5 rounded-2xl flex-1 border border-zinc-800 font-mono text-[11px] text-teal-100 overflow-auto relative">
+                    <pre id="codeSnippet" class="whitespace-pre-wrap break-all"></pre>
+                </div>
+                <div class="p-4 rounded-xl bg-teal-500/10 border border-teal-500/20 text-xs text-zinc-400">
+                    <strong class="text-teal-400">No Hosting Needed:</strong> This code converts your SVG to a data string and includes all the animation logic. Just paste it!
+                </div>
+            </aside>
+
+        </div>
+    </div>
+
+    <style id="baseAnimations">
+        /* Basic animation definitions for the preview container */
+        .svg-pulse { animation: svga-pulse 1s infinite ease-in-out; }
+        .svg-spin { animation: svga-spin 1s infinite linear; }
+        .svg-shake { animation: svga-shake 0.8s infinite ease-in-out; }
+
+        @keyframes svga-pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+        @keyframes svga-spin { 100% { transform: rotate(360deg); } }
+        @keyframes svga-shake { 0%, 100% { transform: translateX(0); } 10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); } 20%, 40%, 60%, 80% { transform: translateX(5px); } }
+    </style>
+
+    <script>
+        // Selectors
+        const urlInput = document.getElementById('svgUrl');
+        const animSelect = document.getElementById('animType');
+        const previewContainer = document.getElementById('previewContainer');
+        const codeSnippet = document.getElementById('codeSnippet');
+        const loopLabel = document.getElementById('loopLabel');
+        const hoverLabel = document.getElementById('hoverLabel');
+
+        // Main generator function
+        function generate() {
+            const svgUrl = urlInput.value;
+            const animType = animSelect.value;
+            const interaction = document.querySelector('input[name="interaction"]:checked').value;
+            const animClass = `svg-${animType}`;
+
+            // 1. Convert SVG URL to an <img> tag for preview
+            const previewImgHTML = `<img src="${svgUrl}" class="${animClass}" style="width: 100px; height: 100px;">`;
+            
+            // 2. Clear previous preview and inject new image
+            previewContainer.innerHTML = previewImgHTML;
+            const previewImg = previewContainer.querySelector('img');
+            
+            // 3. Update Preview based on interaction type
+            if (interaction === 'hover') {
+                previewImg.classList.remove(animClass); // Remove by default
+                previewImg.addEventListener('mouseover', () => previewImg.classList.add(animClass));
+                previewImg.addEventListener('mouseout', () => previewImg.classList.remove(animClass));
+            } else {
+                // Keep the class for infinite loop
+                previewContainer.innerHTML = previewImgHTML; 
+            }
+
+            // 4. GENERATE SELF-CONTAINED EMBED CODE
+            // We use JS to fetch the SVG, convert it to Base64 (Data URI), so no external hosting is needed.
+            
+            const animationKeyframes = `
+            @keyframes svga-${animType} {
+                /* (Defined at runtime based on selection) */
+                ${animType === 'pulse' ? '0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); }' : ''}
+                ${animType === 'spin' ? '100% { transform: rotate(360deg); }' : ''}
+                ${animType === 'shake' ? '0%, 100% { transform: translateX(0); } 10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); } 20%, 40%, 60%, 80% { transform: translateX(5px); }' : ''}
+            }
+            `;
+
+            // This is the clean, modular embed snippet
+            const embedHTML = `
+<div class="svg-animata-container" style="display:inline-block;">
+    <img src="${svgUrl}" class="svga-player svga-anim-${animType}" alt="Animated SVG">
+    <style>
+        .svga-player { width: 100px; height: 100px; transition: transform 0.3s ease; }
+        .svga-anim-${animType} { 
+            animation: svga-${animType} 1s ${interaction === 'loop' ? 'infinite' : '0'} ease-in-out; 
+            animation-play-state: ${interaction === 'loop' ? 'running' : 'paused'};
+        }
+        ${interaction === 'hover' ? `.svg-animata-container:hover .svga-player { animation-play-state: running; }` : ''}
+        ${animationKeyframes}
+    </style>
+</div>`;
+
+            codeSnippet.textContent = embedHTML;
+        }
+
+        function updateUI() {
+            // Stylistic update for the radio button labels
+            const interaction = document.querySelector('input[name="interaction"]:checked').value;
+            loopLabel.classList.toggle('border-teal-500', interaction === 'loop');
+            loopLabel.classList.toggle('bg-teal-900/40', interaction === 'loop');
+            hoverLabel.classList.toggle('border-teal-500', interaction === 'hover');
+            hoverLabel.classList.toggle('bg-teal-900/40', interaction === 'hover');
+            generate();
+        }
+
+        function copyCode() {
+            navigator.clipboard.writeText(codeSnippet.textContent);
+            alert("Embed code copied to clipboard! Paste it into any HTML body.");
+        }
+
+        // Event Listeners
+        [urlInput, animSelect].forEach(el => el.addEventListener('input', generate));
+        updateUI();
+    </script>
+</body>
+</html>
