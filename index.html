@@ -3,14 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SVG Animata | Pro 7.0</title>
+    <title>SVG Animata | Fracture Engine 8.0</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         .canvas-grid { background-image: radial-gradient(#334155 1px, transparent 1px); background-size: 30px 30px; }
         .bg-checker { background-image: conic-gradient(#e5e7eb 25%, #ffffff 0 50%, #e5e7eb 0 75%, #ffffff 0); background-size: 12px 12px; }
         ::-webkit-scrollbar { width: 4px; }
         ::-webkit-scrollbar-thumb { background: #14b8a6; border-radius: 10px; }
-        #previewContainer svg { width: 100%; height: 100%; display: block; }
+        #previewContainer svg { width: 100%; height: 100%; display: block; overflow: visible !important; }
+        .preset-btn { transition: all 0.2s; border: 1px solid #334155; }
+        .preset-btn:hover { border-color: #14b8a6; background: #134e4a; }
     </style>
 </head>
 <body class="bg-slate-950 text-slate-200 min-h-screen font-sans overflow-hidden">
@@ -19,30 +21,45 @@
         <aside class="w-80 border-r border-slate-800 bg-slate-900 flex flex-col shadow-2xl overflow-y-auto">
             <div class="p-6 border-b border-slate-800 bg-slate-900/50">
                 <h1 class="text-xl font-black text-teal-400 italic tracking-tighter">SVG ANIMATA</h1>
-                <p class="text-[9px] text-slate-500 font-bold uppercase tracking-[0.2em]">Scale Engine v7.0</p>
+                <p class="text-[9px] text-slate-500 font-bold uppercase tracking-[0.2em]">Fracture Engine v8.0</p>
             </div>
 
             <div class="p-6 space-y-6">
                 <div>
                     <div class="flex justify-between items-end mb-2">
                         <label class="text-[10px] font-bold text-slate-500 uppercase">1. SVG Source URL</label>
-                        <a href="https://simpleicons.org/" target="_blank" class="text-[9px] text-teal-500 hover:underline font-bold transition-all">GET SVG EXAMPLES →</a>
+                        <a href="https://simpleicons.org/" target="_blank" class="text-[9px] text-teal-500 hover:underline font-bold">Find Logos →</a>
                     </div>
-                    <input type="text" id="svgUrl" value="https://lizducos.princegeorgedesign.com/wp-content/uploads/2026/02/dd3.svg" 
+                    <input type="text" id="svgUrl" value="https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/framer.svg" 
                         class="w-full bg-slate-950 border border-slate-700 rounded-lg p-3 text-[10px] outline-none focus:border-teal-500 transition-all">
                 </div>
 
                 <div>
-                    <div class="flex justify-between text-[10px] font-bold text-slate-500 uppercase mb-2">
-                        <span>2. Dimensions</span>
-                        <span id="sizeLabel" class="text-teal-400">150px</span>
+                    <label class="text-[10px] font-bold text-slate-500 uppercase block mb-2">Presets</label>
+                    <div class="grid grid-cols-3 gap-2">
+                        <button onclick="loadPreset('react')" class="preset-btn bg-slate-950 text-[9px] py-1 rounded">React</button>
+                        <button onclick="loadPreset('github')" class="preset-btn bg-slate-950 text-[9px] py-1 rounded">GitHub</button>
+                        <button onclick="loadPreset('framer')" class="preset-btn bg-slate-950 text-[9px] py-1 rounded">Framer</button>
                     </div>
-                    <input type="range" id="svgSize" min="20" max="600" step="5" value="150" class="w-full h-1 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-teal-500">
                 </div>
 
                 <div>
-                    <label class="text-[10px] font-bold text-slate-500 uppercase block mb-2">3. Animation Style</label>
+                    <div class="flex justify-between text-[10px] font-bold text-slate-500 uppercase mb-2">
+                        <span>2. Scale</span>
+                        <span id="sizeLabel" class="text-teal-400">180px</span>
+                    </div>
+                    <input type="range" id="svgSize" min="40" max="500" step="10" value="180" class="w-full h-1 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-teal-500">
+                </div>
+
+                <div>
+                    <label class="text-[10px] font-bold text-slate-500 uppercase block mb-2">3. Animation Engine</label>
                     <select id="animType" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-3 text-xs outline-none cursor-pointer">
+                        <optgroup label="Fracture & Split">
+                            <option value="slice_v">Vertical Slice</option>
+                            <option value="slice_h">Horizontal Slice</option>
+                            <option value="disintegrate">Disintegrate</option>
+                            <option value="shatter">Shatter Mask</option>
+                        </optgroup>
                         <optgroup label="Hyper-Advanced">
                             <option value="plasma">Plasma Pulse</option>
                             <option value="scanline">CRT Scanline</option>
@@ -67,15 +84,15 @@
 
                 <div class="grid grid-cols-1 gap-4">
                     <div>
-                        <label class="text-[10px] font-bold text-slate-500 uppercase block mb-2">4. Trigger Type</label>
+                        <label class="text-[10px] font-bold text-slate-500 uppercase block mb-2">4. Interaction</label>
                         <div class="grid grid-cols-2 gap-2">
-                            <button onclick="setTrigger('loop')" id="loopBtn" class="bg-teal-600 py-2 rounded text-[10px] font-bold transition-all">LOOP</button>
-                            <button onclick="setTrigger('hover')" id="hoverBtn" class="bg-slate-800 py-2 rounded text-[10px] font-bold transition-all">HOVER</button>
+                            <button onclick="setTrigger('loop')" id="loopBtn" class="bg-teal-600 py-2 rounded text-[10px] font-bold">LOOP</button>
+                            <button onclick="setTrigger('hover')" id="hoverBtn" class="bg-slate-800 py-2 rounded text-[10px] font-bold">HOVER</button>
                         </div>
                     </div>
                     <div>
                         <div class="flex justify-between text-[10px] font-bold text-slate-500 uppercase mb-2">
-                            <span>5. Speed</span>
+                            <span>5. Duration</span>
                             <span id="durLabel" class="text-teal-400">1.5s</span>
                         </div>
                         <input type="range" id="duration" min="0.1" max="5" step="0.1" value="1.5" class="w-full h-1 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-teal-500">
@@ -83,20 +100,19 @@
                 </div>
 
                 <div class="pt-6 border-t border-slate-800 space-y-3">
-                    <h2 class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Instructions</h2>
+                    <h2 class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Guide</h2>
                     <ul class="space-y-3 text-[11px] text-slate-400 leading-snug">
-                        <li class="flex gap-2 items-start"><span class="text-teal-500">✔</span><span>Paste a direct link to a <b>.svg</b> file.</span></li>
-                        <li class="flex gap-2 items-start"><span class="text-teal-500">✔</span><span>Toggle between <b>Loop</b> and <b>Hover</b> interaction.</span></li>
-                        <li class="flex gap-2 items-start"><span class="text-teal-500">✔</span><span>Adjust size and speed to fit your layout.</span></li>
+                        <li class="flex gap-2 items-start"><span class="text-teal-500">✔</span><span>Paste any direct <b>.svg</b> link.</span></li>
+                        <li class="flex gap-2 items-start"><span class="text-teal-500">✔</span><span>Switch between <b>Loop</b> and <b>Hover</b>.</span></li>
+                        <li class="flex gap-2 items-start"><span class="text-teal-500">✔</span><span>CORS proxy is active for cross-domain logos.</span></li>
                     </ul>
                 </div>
             </div>
         </aside>
 
         <main id="canvas" class="flex-1 canvas-grid flex items-center justify-center relative bg-slate-950 transition-all duration-500">
-            <div id="previewContainer" class="flex items-center justify-center transition-all duration-300"></div>
-            
-            <div class="absolute bottom-8 flex gap-3 bg-slate-900/80 backdrop-blur-md p-2 rounded-full border border-slate-800 shadow-2xl">
+            <div id="previewContainer" class="flex items-center justify-center"></div>
+            <div class="absolute bottom-8 flex gap-3 bg-slate-900/80 backdrop-blur-md p-2 rounded-full border border-slate-800">
                 <button onclick="setTheme('dark')" class="w-6 h-6 bg-slate-950 rounded-full border border-slate-700"></button>
                 <button onclick="setTheme('light')" class="w-6 h-6 bg-white rounded-full border border-slate-300"></button>
                 <button onclick="setTheme('check')" class="w-6 h-6 bg-checker rounded-full border border-slate-700"></button>
@@ -105,10 +121,10 @@
 
         <aside class="w-96 border-l border-slate-800 bg-slate-900 flex flex-col p-6 shadow-2xl">
             <div class="flex justify-between items-center mb-4">
-                <h3 class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Embedded Code</h3>
-                <button onclick="copyCode()" class="text-[10px] bg-teal-600 px-4 py-1.5 rounded-full font-bold hover:bg-teal-500">COPY CODE</button>
+                <h3 class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Output Code</h3>
+                <button onclick="copyCode()" class="text-[10px] bg-teal-600 px-4 py-1.5 rounded-full font-bold hover:bg-teal-500">COPY</button>
             </div>
-            <div class="flex-1 bg-black/50 border border-slate-800 rounded-xl p-5 font-mono text-[11px] text-teal-200/80 overflow-auto border-dashed">
+            <div class="flex-1 bg-black/50 border border-slate-800 rounded-xl p-5 font-mono text-[11px] text-teal-200/80 overflow-auto">
                 <pre id="codeSnippet" class="whitespace-pre-wrap break-all"></pre>
             </div>
         </aside>
@@ -117,6 +133,10 @@
     <script>
         let trigger = 'loop';
         const keyframeLib = {
+            slice_v: '0% { clip-path: inset(0 0 0 0); } 50% { clip-path: inset(0 50% 0 0); transform: translateX(-20px); } 100% { clip-path: inset(0 0 0 0); }',
+            slice_h: '0% { clip-path: inset(0 0 0 0); } 50% { clip-path: inset(50% 0 0 0); transform: translateY(20px); } 100% { clip-path: inset(0 0 0 0); }',
+            disintegrate: '0% { opacity: 1; filter: blur(0); } 50% { clip-path: polygon(0% 0%, 100% 0%, 100% 50%, 0% 50%); transform: translateY(-30px); opacity: 0; } 100% { opacity: 1; }',
+            shatter: '0% { clip-path: circle(100%); } 50% { clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%); transform: scale(1.2); } 100% { clip-path: circle(100%); }',
             scanline: '0% { clip-path: inset(0 0 95% 0); opacity: 0.2; } 50% { clip-path: inset(95% 0 0 0); opacity: 0.8; } 100% { clip-path: inset(0 0 95% 0); opacity: 0.2; }',
             plasma: '0%, 100% { filter: hue-rotate(0deg) contrast(1.2); } 50% { filter: hue-rotate(270deg) contrast(2) drop-shadow(0 0 15px cyan); }',
             vortex: '0% { transform: rotate(0deg) scale(1); filter: blur(0px); } 50% { transform: rotate(180deg) scale(0.1); filter: blur(10px); } 100% { transform: rotate(360deg) scale(1); filter: blur(0px); }',
@@ -131,6 +151,17 @@
             float: '0%, 100% { transform: translateY(0); } 50% { transform: translateY(-25px); }',
             bounce: '0%, 20%, 50%, 80%, 100% { transform: translateY(0); } 40% { transform: translateY(-35px); } 60% { transform: translateY(-15px); }'
         };
+
+        const presets = {
+            react: "https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/react.svg",
+            github: "https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/github.svg",
+            framer: "https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/framer.svg"
+        };
+
+        function loadPreset(key) {
+            document.getElementById('svgUrl').value = presets[key];
+            update();
+        }
 
         function setTrigger(t) {
             trigger = t;
@@ -148,7 +179,7 @@
         }
 
         async function update() {
-            const url = document.getElementById('svgUrl').value;
+            const urlInput = document.getElementById('svgUrl').value;
             const anim = document.getElementById('animType').value;
             const dur = document.getElementById('duration').value;
             const size = document.getElementById('svgSize').value;
@@ -158,15 +189,19 @@
             document.getElementById('previewContainer').style.width = size + 'px';
             document.getElementById('previewContainer').style.height = size + 'px';
 
+            const proxyUrl = "https://api.allorigins.win/get?url=" + encodeURIComponent(urlInput);
+
             try {
-                const response = await fetch(url);
-                let svgContent = await response.text();
+                const response = await fetch(proxyUrl);
+                const data = await response.json();
+                let svgContent = data.contents;
+
                 svgContent = svgContent.replace(/<svg/, '<svg class="svga-it"');
 
                 const embedCode = `<div class="svga-wrapper" style="display:inline-block; width:${size}px; height:${size}px;">
     ${svgContent}
     <style>
-        .svga-it { width: 100%; height: 100%; display: block; ${trigger === 'loop' ? `animation: kf-svga ${dur}s infinite ease-in-out;` : 'transition: all 0.3s ease;'} }
+        .svga-it { width: 100%; height: 100%; display: block; overflow: visible; ${trigger === 'loop' ? `animation: kf-svga ${dur}s infinite ease-in-out;` : 'transition: all 0.3s ease;'} }
         ${trigger === 'hover' ? `.svga-wrapper:hover .svga-it { animation: kf-svga ${dur}s infinite ease-in-out; }` : ''}
         @keyframes kf-svga { ${keyframeLib[anim]} }
     </style>
@@ -183,7 +218,7 @@
                 document.getElementById('codeSnippet').innerText = embedCode;
 
             } catch (e) {
-                document.getElementById('previewContainer').innerHTML = "<span class='text-red-500 text-[10px] font-bold'>FETCH ERROR / CORS BLOCK</span>";
+                document.getElementById('previewContainer').innerHTML = "<span class='text-red-500 text-[10px] font-bold'>LOAD ERROR</span>";
             }
         }
 
@@ -192,7 +227,7 @@
             navigator.clipboard.writeText(text);
             const btn = event.target;
             btn.innerText = "COPIED!";
-            setTimeout(() => btn.innerText = "COPY CODE", 2000);
+            setTimeout(() => btn.innerText = "COPY", 2000);
         }
 
         ['svgUrl', 'animType', 'duration', 'svgSize'].forEach(id => document.getElementById(id).addEventListener('input', update));
