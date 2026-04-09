@@ -3,57 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SVG Animata | Morph Edition</title>
+    <title>SVG Animata | Advanced Edition</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         .canvas-grid { background-image: radial-gradient(#334155 1px, transparent 1px); background-size: 30px 30px; }
-        .bg-checker { background-image: conic-gradient(#e5e7eb 25%, #ffffff 0 50%, #e5e7eb 0 75%, #ffffff 0); background-size: 20px 20px; }
         ::-webkit-scrollbar { width: 5px; }
         ::-webkit-scrollbar-thumb { background: #14b8a6; border-radius: 10px; }
-        
-        /* Morph Logic */
-        .morph-container { position: relative; width: 150px; height: 150px; }
-        .morph-asset { position: absolute; top: 0; left: 0; width: 100%; height: 100%; transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1); }
-        .asset-b { opacity: 0; transform: scale(0.5) rotate(-20deg); filter: blur(10px); }
-
-        /* Triggering the Morph */
-        .morph-active .asset-a { opacity: 0; transform: scale(1.5) rotate(20deg); filter: blur(10px); }
-        .morph-active .asset-b { opacity: 1; transform: scale(1) rotate(0deg); filter: blur(0px); }
     </style>
 </head>
 <body class="bg-slate-950 text-slate-200 min-h-screen font-sans overflow-hidden">
 
     <div class="flex h-screen">
         <aside class="w-80 border-r border-slate-800 bg-slate-900 flex flex-col shadow-2xl z-10 overflow-y-auto">
-            <div class="p-6 border-b border-slate-800">
-                <h1 class="text-xl font-black text-teal-400 italic">SVG ANIMATA MORPH</h1>
+            <div class="p-6 border-b border-slate-800 bg-slate-900/50">
+                <h1 class="text-2xl font-black text-teal-400 italic tracking-tighter">SVG ANIMATA</h1>
+                <p class="text-[10px] text-slate-500 font-bold uppercase tracking-widest">Advanced Engine 3.0</p>
             </div>
 
-            <div class="p-6 space-y-6">
+            <div class="p-6 space-y-6 flex-1">
                 <section>
-                    <label class="text-[10px] font-bold text-slate-500 uppercase">Primary SVG (A)</label>
-                    <input type="text" id="svgUrlA" value="https://lizducos.princegeorgedesign.com/wp-content/uploads/2026/02/dd3.svg" 
-                        class="w-full bg-slate-950 border border-slate-700 rounded-lg p-3 text-[10px] mt-2 outline-none focus:border-teal-400">
+                    <label class="text-[10px] font-bold text-slate-500 uppercase">SVG URL</label>
+                    <input type="text" id="svgUrl" value="https://lizducos.princegeorgedesign.com/wp-content/uploads/2026/02/dd3.svg" 
+                        class="w-full bg-slate-950 border border-slate-700 rounded-lg p-3 text-xs mt-2 outline-none focus:border-teal-400 transition-all">
                 </section>
 
                 <section>
-                    <label class="text-[10px] font-bold text-slate-400 uppercase">Secondary SVG (B)</label>
-                    <input type="text" id="svgUrlB" value="https://api.iconify.design/logos:figma.svg" 
-                        class="w-full bg-slate-950 border border-teal-900/50 rounded-lg p-3 text-[10px] mt-2 outline-none focus:border-teal-400">
-                </section>
-
-                <section>
-                    <label class="text-[10px] font-bold text-slate-500 uppercase">Base Animation (20 Styles)</label>
-                    <select id="animType" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-3 text-xs mt-2 outline-none">
-                        <optgroup label="Standard (10)">
-                            <option value="pulse">Pulse</option><option value="spin">Spin</option><option value="float">Float</option>
-                            <option value="bounce">Bounce</option><option value="shake">Shake</option><option value="swing">Swing</option>
-                            <option value="zoom">Soft Zoom</option><option value="slide">Slide In</option><option value="tada">Tada!</option><option value="jello">Jello</option>
+                    <label class="text-[10px] font-bold text-slate-500 uppercase">Animation Style</label>
+                    <select id="animType" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-3 text-xs mt-2 outline-none cursor-pointer">
+                        <optgroup label="Advanced Effects (New)">
+                            <option value="liquid">Liquid Wobble</option>
+                            <option value="hyper_glitch">Hyper Glitch</option>
+                            <option value="orbit_3d">3D Orbit</option>
+                            <option value="vortex">Vortex Spin</option>
+                            <option value="ghost">Ghosting Fade</option>
+                            <option value="shimmer">Golden Shimmer</option>
+                            <option value="magnetic">Magnetic Pull</option>
+                            <option value="electric">Electric Pulse</option>
+                            <option value="scanline">CRT Scanline</option>
+                            <option value="float_3d">3D Levitation</option>
                         </optgroup>
-                        <optgroup label="Pro (10)">
-                            <option value="morph">Liquid Morph</option><option value="flip">3D Flip</option><option value="glitch">Cyber Glitch</option>
-                            <option value="glaze">Color Glaze</option><option value="neon">Neon Glow</option><option value="flash">Strobe Flash</option>
-                            <option value="rubber">Rubber Band</option><option value="blur">Focus Fade</option><option value="skew">Skew Warp</option><option value="portal">Portal Spin</option>
+                        <optgroup label="Standard Essentials">
+                            <option value="pulse">Pulse</option><option value="spin">Spin</option><option value="float">Float</option>
+                            <option value="bounce">Bounce</option><option value="shake">Shake</option>
                         </optgroup>
                     </select>
                 </section>
@@ -61,95 +52,91 @@
                 <section class="space-y-4 pt-4 border-t border-slate-800">
                     <div class="flex justify-between text-[10px] font-bold text-slate-500 uppercase">
                         <span>Speed</span>
-                        <span id="durLabel" class="text-teal-400">1.2s</span>
+                        <span id="durLabel" class="text-teal-400">1.5s</span>
                     </div>
-                    <input type="range" id="duration" min="0.1" max="4" step="0.1" value="1.2" class="w-full h-1 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-teal-500">
+                    <input type="range" id="duration" min="0.1" max="5" step="0.1" value="1.5" class="w-full h-1 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-teal-500">
                     
-                    <div class="pt-4">
-                        <button id="morphBtn" onclick="toggleMorph()" class="w-full py-3 bg-gradient-to-r from-teal-600 to-blue-600 rounded-lg font-bold text-xs shadow-lg hover:scale-105 transition-transform">
-                            TEST MORPH TRANSITION
-                        </button>
+                    <label class="text-[10px] font-bold text-slate-500 uppercase block mt-4">Trigger</label>
+                    <div class="grid grid-cols-2 gap-2 mt-1">
+                        <button onclick="setTrigger('loop')" id="loopBtn" class="bg-teal-600 text-[10px] font-bold py-2 rounded">LOOP</button>
+                        <button onclick="setTrigger('hover')" id="hoverBtn" class="bg-slate-800 text-[10px] font-bold py-2 rounded">HOVER</button>
                     </div>
                 </section>
             </div>
         </aside>
 
         <main class="flex-1 canvas-grid flex items-center justify-center relative bg-slate-950">
-            <div id="previewContainer" class="p-16 rounded-full bg-slate-900/40 border border-slate-800 shadow-2xl">
-                </div>
+            <div id="previewContainer"></div>
         </main>
 
-        <aside class="w-96 border-l border-slate-800 bg-slate-900 p-6 flex flex-col">
-            <h3 class="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-4">Morph Embed Code</h3>
-            <div class="flex-1 bg-black/50 border border-slate-800 rounded-xl p-4 font-mono text-[10px] text-teal-300 overflow-auto">
-                <pre id="codeSnippet" class="whitespace-pre-wrap"></pre>
+        <aside class="w-96 border-l border-slate-800 bg-slate-900 flex flex-col">
+            <div class="p-6 flex-1 flex flex-col">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Advanced Embed Code</h3>
+                    <button onclick="copyCode()" class="text-[10px] bg-teal-600 px-3 py-1 rounded font-bold hover:bg-teal-500 transition-colors">COPY</button>
+                </div>
+                <div class="flex-1 bg-black/50 border border-slate-800 rounded-xl p-4 font-mono text-[10px] text-teal-300 overflow-auto">
+                    <pre id="codeSnippet" class="whitespace-pre-wrap"></pre>
+                </div>
             </div>
-            <button onclick="copyCode()" class="mt-4 w-full py-2 bg-slate-800 rounded font-bold text-xs hover:bg-teal-600 transition">COPY CODE</button>
         </aside>
     </div>
 
     <script>
-        let isMorphed = false;
-        const keyframes = {
+        let trigger = 'loop';
+        const keyframeLib = {
+            // ADVANCED EFFECTS
+            liquid: '0%, 100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; transform: scale(1); } 50% { border-radius: 30% 60% 70% 30% / 50% 60% 30% 60%; transform: scale(1.1) rotate(5deg); }',
+            hyper_glitch: '0% { clip-path: inset(43% 0 30% 0); transform: translate(-5px, 5px); } 10% { clip-path: inset(10% 0 60% 0); transform: translate(5px, -5px); } 20% { clip-path: inset(80% 0 1% 0); transform: translate(-2px, 2px); } 30% { clip-path: none; transform: none; } 100% { clip-path: none; transform: none; }',
+            orbit_3d: 'from { transform: perspective(500px) rotate3d(1, 1, 0, 0deg); } to { transform: perspective(500px) rotate3d(1, 1, 0, 360deg); }',
+            vortex: '0% { transform: rotate(0deg) scale(1); filter: blur(0px); } 50% { transform: rotate(180deg) scale(0.2); filter: blur(4px); } 100% { transform: rotate(360deg) scale(1); filter: blur(0px); }',
+            ghost: '0% { opacity: 1; transform: scale(1); filter: drop-shadow(0 0 0px white); } 50% { opacity: 0.3; transform: scale(1.5); filter: drop-shadow(0 0 20px teal); } 100% { opacity: 1; transform: scale(1); filter: drop-shadow(0 0 0px white); }',
+            shimmer: '0% { filter: brightness(1) contrast(1); } 50% { filter: brightness(2) contrast(1.5) drop-shadow(0 0 10px gold); } 100% { filter: brightness(1) contrast(1); }',
+            magnetic: '0%, 100% { transform: translate(0,0); } 25% { transform: translate(10px, -10px); } 50% { transform: translate(-10px, 10px); } 75% { transform: translate(10px, 10px); }',
+            electric: '0%, 100% { filter: drop-shadow(0 0 0px cyan); opacity: 1; } 10%, 90% { filter: drop-shadow(0 0 15px cyan); opacity: 0.8; transform: skewX(-2deg); } 20%, 80% { transform: skewX(2deg); }',
+            scanline: '0% { clip-path: inset(0 0 95% 0); opacity: 0.2; } 50% { clip-path: inset(95% 0 0 0); opacity: 0.8; } 100% { clip-path: inset(0 0 95% 0); opacity: 0.2; }',
+            float_3d: '0%, 100% { transform: perspective(600px) rotateX(0deg) translateY(0px); } 50% { transform: perspective(600px) rotateX(20deg) translateY(-20px); }',
+            
+            // ESSENTIALS
             pulse: '0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); }',
             spin: 'from { transform: rotate(0deg); } to { transform: rotate(360deg); }',
             float: '0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); }',
             bounce: '0%, 20%, 50%, 80%, 100% { transform: translateY(0); } 40% { transform: translateY(-30px); } 60% { transform: translateY(-15px); }',
-            shake: '0%, 100% { transform: translateX(0); } 25% { transform: translateX(-8px); } 75% { transform: translateX(8px); }',
-            swing: '20% { transform: rotate(15deg); } 40% { transform: rotate(-10deg); } 60% { transform: rotate(5deg); } 80% { transform: rotate(-5deg); } 100% { transform: rotate(0deg); }',
-            zoom: '0% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.2); opacity: 0.8; } 100% { transform: scale(1); opacity: 1; }',
-            slide: '0% { transform: translateX(-50px); opacity: 0; } 100% { transform: translateX(0); opacity: 1; }',
-            tada: '0% { transform: scale(1); } 10%, 20% { transform: scale(0.9) rotate(-3deg); } 30%, 50%, 70%, 90% { transform: scale(1.1) rotate(3deg); } 40%, 60%, 80% { transform: scale(1.1) rotate(-3deg); } 100% { transform: scale(1) rotate(0); }',
-            jello: '11.1% { transform: none; } 22.2% { transform: skewX(-12.5deg) skewY(-12.5deg); } 33.3% { transform: skewX(6.25deg) skewY(6.25deg); } 44.4% { transform: skewX(-3.125deg) skewY(-3.125deg); } 55.5% { transform: skewX(1.5625deg) skewY(1.5625deg); } 100% { transform: none; }',
-            morph: '0%, 100% { border-radius: 50%; } 50% { border-radius: 30% 70% 70% 30%; transform: scale(1.1); }',
-            flip: 'from { transform: perspective(400px) rotateY(0); } to { transform: perspective(400px) rotateY(360deg); }',
-            glitch: '0% { transform: translate(0); } 20% { transform: translate(-5px, 5px); } 40% { transform: translate(-5px, -5px); } 60% { transform: translate(5px, 5px); } 80% { transform: translate(5px, -5px); } 100% { transform: translate(0); }',
-            glaze: 'from { filter: hue-rotate(0deg); } to { filter: hue-rotate(360deg); }',
-            neon: 'from { filter: drop-shadow(0 0 2px #2dd4bf); } to { filter: drop-shadow(0 0 20px #2dd4bf); }',
-            flash: '0%, 50%, 100% { opacity: 1; } 25%, 75% { opacity: 0.2; }',
-            rubber: '0% { transform: scale3d(1, 1, 1); } 30% { transform: scale3d(1.25, 0.75, 1); } 40% { transform: scale3d(0.75, 1.25, 1); } 50% { transform: scale3d(1.15, 0.85, 1); } 100% { transform: scale3d(1, 1, 1); }',
-            blur: '0%, 100% { filter: blur(0px); opacity: 1; } 50% { filter: blur(8px); opacity: 0.5; }',
-            skew: '0%, 100% { transform: skew(0deg); } 50% { transform: skew(20deg, 10deg); }',
-            portal: '0% { transform: scale(1) rotate(0); filter: brightness(1); } 50% { transform: scale(0.1) rotate(180deg); filter: brightness(2); } 100% { transform: scale(1) rotate(360deg); filter: brightness(1); }'
+            shake: '0%, 100% { transform: translateX(0); } 25% { transform: translateX(-8px); } 75% { transform: translateX(8px); }'
         };
 
-        function toggleMorph() {
-            isMorphed = !isMorphed;
-            document.getElementById('previewContainer').classList.toggle('morph-active', isMorphed);
+        function setTrigger(t) {
+            trigger = t;
+            document.getElementById('loopBtn').className = t === 'loop' ? 'bg-teal-600 text-[10px] font-bold py-2 rounded' : 'bg-slate-800 text-[10px] font-bold py-2 rounded';
+            document.getElementById('hoverBtn').className = t === 'hover' ? 'bg-teal-600 text-[10px] font-bold py-2 rounded' : 'bg-slate-800 text-[10px] font-bold py-2 rounded';
             update();
         }
 
         function update() {
-            const urlA = document.getElementById('svgUrlA').value;
-            const urlB = document.getElementById('svgUrlB').value;
+            const url = document.getElementById('svgUrl').value;
             const anim = document.getElementById('animType').value;
             const dur = document.getElementById('duration').value;
             document.getElementById('durLabel').innerText = dur + 's';
 
-            const embed = `
-<div class="svga-morph-wrapper ${isMorphed ? 'morph-active' : ''}">
-  <div class="svga-inner-anim">
-    <img src="${urlA}" class="svga-asset asset-a">
-    <img src="${urlB}" class="svga-asset asset-b">
-  </div>
+            const embed = `<div class="svga-box" style="display:inline-block; position:relative;">
+  <img src="${url}" class="svga-it">
   <style>
-    .svga-morph-wrapper { position: relative; width: 120px; height: 120px; cursor: pointer; }
-    .svga-inner-anim { width: 100%; height: 100%; animation: kf-main ${dur}s infinite ease-in-out; }
-    .svga-asset { position: absolute; inset: 0; width: 100%; height: 100%; transition: all 0.8s ease; }
-    .asset-b { opacity: 0; transform: scale(0.5) rotate(-20deg); filter: blur(10px); }
-    
-    .morph-active .asset-a { opacity: 0; transform: scale(1.5) rotate(20deg); filter: blur(10px); }
-    .morph-active .asset-b { opacity: 1; transform: scale(1) rotate(0deg); filter: blur(0px); }
-    
-    @keyframes kf-main { ${keyframes[anim]} }
+    .svga-it { 
+        width: 150px; height: 150px; 
+        ${trigger === 'loop' ? `animation: svga-kf ${dur}s infinite ease-in-out;` : 'transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);'} 
+    }
+    ${trigger === 'hover' ? `.svga-box:hover .svga-it { animation: svga-kf ${dur}s infinite ease-in-out; }` : ''}
+    @keyframes svga-kf { ${keyframeLib[anim]} }
   </style>
 </div>`;
 
             document.getElementById('previewContainer').innerHTML = embed;
-            document.getElementById('codeSnippet').innerText = embed.trim();
+            document.getElementById('codeSnippet').innerText = embed;
         }
 
-        ['svgUrlA', 'svgUrlB', 'animType', 'duration'].forEach(id => document.getElementById(id).addEventListener('input', update));
+            document.getElementById('svgUrl').addEventListener('input', update);
+            document.getElementById('animType').addEventListener('change', update);
+            document.getElementById('duration').addEventListener('input', update);
         update();
     </script>
 </body>
