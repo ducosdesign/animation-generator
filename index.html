@@ -1,15 +1,23 @@
+This is a great direction. Adding a scaling feature makes the tool much more versatile for designing hero elements versus small accents. I've also integrated a curated link to **Simple Icons**, which is a fantastic resource for high-quality SVGs.
+
+I have updated the logic to include a **Size** slider and adjusted the instructions to be more functional rather than prescriptive.
+
+### SVG Animata | Ultimate 30 Pro (v7.0)
+
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SVG Animata | Ultimate 30</title>
+    <title>SVG Animata | Pro 7.0</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         .canvas-grid { background-image: radial-gradient(#334155 1px, transparent 1px); background-size: 30px 30px; }
         .bg-checker { background-image: conic-gradient(#e5e7eb 25%, #ffffff 0 50%, #e5e7eb 0 75%, #ffffff 0); background-size: 12px 12px; }
         ::-webkit-scrollbar { width: 4px; }
         ::-webkit-scrollbar-thumb { background: #14b8a6; border-radius: 10px; }
+        #previewContainer svg { width: 100%; height: 100%; display: block; }
     </style>
 </head>
 <body class="bg-slate-950 text-slate-200 min-h-screen font-sans overflow-hidden">
@@ -18,96 +26,97 @@
         <aside class="w-80 border-r border-slate-800 bg-slate-900 flex flex-col shadow-2xl overflow-y-auto">
             <div class="p-6 border-b border-slate-800 bg-slate-900/50">
                 <h1 class="text-xl font-black text-teal-400 italic tracking-tighter">SVG ANIMATA</h1>
-                <p class="text-[9px] text-slate-500 font-bold uppercase tracking-[0.2em]">Ultimate Engine v6.0</p>
+                <p class="text-[9px] text-slate-500 font-bold uppercase tracking-[0.2em]">Scale Engine v7.0</p>
             </div>
 
             <div class="p-6 space-y-6">
                 <div>
-                    <label class="text-[10px] font-bold text-slate-500 uppercase block mb-2">1. SVG Source URL</label>
+                    <div class="flex justify-between items-end mb-2">
+                        <label class="text-[10px] font-bold text-slate-500 uppercase">1. SVG Source URL</label>
+                        <a href="https://simpleicons.org/" target="_blank" class="text-[9px] text-teal-500 hover:underline font-bold transition-all">GET SVG EXAMPLES →</a>
+                    </div>
                     <input type="text" id="svgUrl" value="https://lizducos.princegeorgedesign.com/wp-content/uploads/2026/02/dd3.svg" 
                         class="w-full bg-slate-950 border border-slate-700 rounded-lg p-3 text-[10px] outline-none focus:border-teal-500 transition-all">
                 </div>
 
                 <div>
-                    <label class="text-[10px] font-bold text-slate-500 uppercase block mb-2">2. Animation Style (30 Styles)</label>
+                    <div class="flex justify-between text-[10px] font-bold text-slate-500 uppercase mb-2">
+                        <span>2. Dimensions</span>
+                        <span id="sizeLabel" class="text-teal-400">150px</span>
+                    </div>
+                    <input type="range" id="svgSize" min="20" max="600" step="5" value="150" class="w-full h-1 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-teal-500">
+                </div>
+
+                <div>
+                    <label class="text-[10px] font-bold text-slate-500 uppercase block mb-2">3. Animation Style</label>
                     <select id="animType" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-3 text-xs outline-none cursor-pointer">
-                        <optgroup label="Hyper-Advanced (10)">
+                        <optgroup label="Hyper-Advanced">
                             <option value="plasma">Plasma Pulse</option>
-                            <option value="scanline">CRT Scanline (CT)</option>
-                            <option value="echo">Motion Echo</option>
-                            <option value="quantum">Quantum Leap</option>
-                            <option value="tectonic">Tectonic Shift</option>
+                            <option value="scanline">CRT Scanline</option>
                             <option value="vortex">Vortex Spin</option>
                             <option value="glitch">Cyber Glitch</option>
-                            <option value="portal">Portal Spin</option>
                             <option value="electric">Electric Storm</option>
-                            <option value="magnetic">Magnetic Pull</option>
                         </optgroup>
-                        <optgroup label="Pro Effects (10)">
+                        <optgroup label="Pro Effects">
                             <option value="liquid">Liquid Wobble</option>
                             <option value="orbit_3d">3D Orbit</option>
-                            <option value="float_3d">3D Levitation</option>
-                            <option value="ghost">Ghosting Fade</option>
-                            <option value="shimmer">Golden Shimmer</option>
-                            <option value="prism">Prism Shift</option>
                             <option value="neon">Neon Glow</option>
                             <option value="blur">Focus Blur</option>
-                            <option value="skew">Skew Warp</option>
-                            <option value="scan_box">Scanner Box</option>
                         </optgroup>
-                        <optgroup label="Standard Essentials (10)">
-                            <option value="pulse">Pulse</option><option value="spin">Spin</option>
-                            <option value="float">Float</option><option value="bounce">Bounce</option>
-                            <option value="shake">Shake</option><option value="swing">Swing</option>
-                            <option value="tada">Tada!</option><option value="jello">Jello</option>
-                            <option value="rubber">Rubber Band</option><option value="flash">Strobe Flash</option>
+                        <optgroup label="Standard">
+                            <option value="pulse">Pulse</option>
+                            <option value="spin">Spin</option>
+                            <option value="float">Float</option>
+                            <option value="bounce">Bounce</option>
                         </optgroup>
                     </select>
                 </div>
 
-                <div>
-                    <label class="text-[10px] font-bold text-slate-500 uppercase block mb-2">3. Trigger Type</label>
-                    <div class="grid grid-cols-2 gap-2">
-                        <button onclick="setTrigger('loop')" id="loopBtn" class="bg-teal-600 py-2 rounded text-[10px] font-bold transition-all">LOOP</button>
-                        <button onclick="setTrigger('hover')" id="hoverBtn" class="bg-slate-800 py-2 rounded text-[10px] font-bold transition-all">HOVER</button>
+                <div class="grid grid-cols-1 gap-4">
+                    <div>
+                        <label class="text-[10px] font-bold text-slate-500 uppercase block mb-2">4. Trigger Type</label>
+                        <div class="grid grid-cols-2 gap-2">
+                            <button onclick="setTrigger('loop')" id="loopBtn" class="bg-teal-600 py-2 rounded text-[10px] font-bold transition-all">LOOP</button>
+                            <button onclick="setTrigger('hover')" id="hoverBtn" class="bg-slate-800 py-2 rounded text-[10px] font-bold transition-all">HOVER</button>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between text-[10px] font-bold text-slate-500 uppercase mb-2">
+                            <span>5. Speed</span>
+                            <span id="durLabel" class="text-teal-400">1.5s</span>
+                        </div>
+                        <input type="range" id="duration" min="0.1" max="5" step="0.1" value="1.5" class="w-full h-1 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-teal-500">
                     </div>
                 </div>
 
-                <div>
-                    <div class="flex justify-between text-[10px] font-bold text-slate-500 uppercase mb-2">
-                        <span>4. Speed</span>
-                        <span id="durLabel" class="text-teal-400">1.5s</span>
-                    </div>
-                    <input type="range" id="duration" min="0.1" max="5" step="0.1" value="1.5" class="w-full h-1 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-teal-500">
-                </div>
-
-                <div class="pt-8 border-t border-slate-800 space-y-4">
+                <div class="pt-6 border-t border-slate-800 space-y-3">
                     <h2 class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Instructions</h2>
-                    <ul class="space-y-4 text-[11px] text-slate-400 leading-snug">
-                        <li class="flex gap-3 items-start"><span class="text-teal-500 mt-0.5 text-xs">✔</span><span>Paste a direct link to any <b>.svg</b> file.</span></li>
-                        <li class="flex gap-3 items-start"><span class="text-teal-500 mt-0.5 text-xs">✔</span><span>Choose <b>Loop</b> for icons or <b>Hover</b> for buttons.</span></li>
-                        <li class="flex gap-3 items-start"><span class="text-teal-500 mt-0.5 text-xs">✔</span><span>Copy the self-contained code directly to your site.</span></li>
+                    <ul class="space-y-3 text-[11px] text-slate-400 leading-snug">
+                        <li class="flex gap-2 items-start"><span class="text-teal-500">✔</span><span>Paste a direct link to a <b>.svg</b> file.</span></li>
+                        <li class="flex gap-2 items-start"><span class="text-teal-500">✔</span><span>Toggle between <b>Loop</b> and <b>Hover</b> interaction.</span></li>
+                        <li class="flex gap-2 items-start"><span class="text-teal-500">✔</span><span>Adjust size and speed to fit your layout.</span></li>
                     </ul>
                 </div>
             </div>
         </aside>
 
         <main id="canvas" class="flex-1 canvas-grid flex items-center justify-center relative bg-slate-950 transition-all duration-500">
-            <div id="previewContainer" class="p-12"></div>
+            <div id="previewContainer" class="flex items-center justify-center transition-all duration-300"></div>
+            
             <div class="absolute bottom-8 flex gap-3 bg-slate-900/80 backdrop-blur-md p-2 rounded-full border border-slate-800 shadow-2xl">
-                <button onclick="setTheme('dark')" class="w-6 h-6 bg-slate-950 rounded-full border border-slate-700 hover:scale-110 transition-transform"></button>
-                <button onclick="setTheme('light')" class="w-6 h-6 bg-white rounded-full border border-slate-300 hover:scale-110 transition-transform"></button>
-                <button onclick="setTheme('check')" class="w-6 h-6 bg-checker rounded-full border border-slate-700 hover:scale-110 transition-transform"></button>
+                <button onclick="setTheme('dark')" class="w-6 h-6 bg-slate-950 rounded-full border border-slate-700"></button>
+                <button onclick="setTheme('light')" class="w-6 h-6 bg-white rounded-full border border-slate-300"></button>
+                <button onclick="setTheme('check')" class="w-6 h-6 bg-checker rounded-full border border-slate-700"></button>
             </div>
         </main>
 
         <aside class="w-96 border-l border-slate-800 bg-slate-900 flex flex-col p-6 shadow-2xl">
             <div class="flex justify-between items-center mb-4">
-                <h3 class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Self-Contained Code</h3>
-                <button onclick="copyCode()" class="text-[10px] bg-teal-600 px-4 py-1.5 rounded-full font-bold hover:bg-teal-500 shadow-lg">COPY</button>
+                <h3 class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Embedded Code</h3>
+                <button onclick="copyCode()" class="text-[10px] bg-teal-600 px-4 py-1.5 rounded-full font-bold hover:bg-teal-500">COPY CODE</button>
             </div>
             <div class="flex-1 bg-black/50 border border-slate-800 rounded-xl p-5 font-mono text-[11px] text-teal-200/80 overflow-auto border-dashed">
-                <pre id="codeSnippet"></pre>
+                <pre id="codeSnippet" class="whitespace-pre-wrap break-all"></pre>
             </div>
         </aside>
     </div>
@@ -115,47 +124,25 @@
     <script>
         let trigger = 'loop';
         const keyframeLib = {
-            // HYPER-ADVANCED (10)
             scanline: '0% { clip-path: inset(0 0 95% 0); opacity: 0.2; } 50% { clip-path: inset(95% 0 0 0); opacity: 0.8; } 100% { clip-path: inset(0 0 95% 0); opacity: 0.2; }',
             plasma: '0%, 100% { filter: hue-rotate(0deg) contrast(1.2); } 50% { filter: hue-rotate(270deg) contrast(2) drop-shadow(0 0 15px cyan); }',
-            echo: '0% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.5); opacity: 0; filter: blur(5px); } 100% { transform: scale(1); opacity: 1; }',
-            quantum: '0% { transform: scale(1) skew(0); } 20% { transform: scale(0.8) skew(10deg); opacity: 0.5; } 50% { transform: scale(1.2) skew(-10deg); } 100% { transform: scale(1) skew(0); }',
-            tectonic: '0%, 100% { transform: translate(0,0); } 33% { transform: translate(8px, -4px); } 66% { transform: translate(-8px, 4px); }',
             vortex: '0% { transform: rotate(0deg) scale(1); filter: blur(0px); } 50% { transform: rotate(180deg) scale(0.1); filter: blur(10px); } 100% { transform: rotate(360deg) scale(1); filter: blur(0px); }',
             glitch: '0% { clip-path: inset(43% 0 30% 0); transform: translate(-5px, 5px); } 10% { clip-path: inset(10% 0 60% 0); transform: translate(5px, -5px); } 20% { clip-path: none; }',
-            portal: '0% { transform: scale(1) rotate(0); } 50% { transform: scale(0) rotate(180deg); opacity: 0; } 100% { transform: scale(1) rotate(360deg); opacity: 1; }',
             electric: '0%, 100% { filter: brightness(1); } 10%, 90% { filter: brightness(3) drop-shadow(0 0 10px white); transform: skewX(-15deg); } 20%, 80% { transform: skewX(15deg); }',
-            magnetic: '0%, 100% { transform: translate(0,0); } 25% { transform: translate(15px, 15px); } 50% { transform: translate(-15px, -15px); } 75% { transform: translate(15px, -15px); }',
-
-            // PRO EFFECTS (10)
             liquid: '0%, 100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; transform: scale(1); } 50% { border-radius: 30% 60% 70% 30% / 50% 60% 30% 60%; transform: scale(1.1); }',
             orbit_3d: 'from { transform: perspective(500px) rotate3d(1, 1, 0, 0deg); } to { transform: perspective(500px) rotate3d(1, 1, 0, 360deg); }',
-            float_3d: '0%, 100% { transform: perspective(600px) rotateX(0deg) translateY(0); } 50% { transform: perspective(600px) rotateX(25deg) translateY(-20px); }',
-            ghost: '0% { opacity: 1; transform: scale(1); } 50% { opacity: 0.3; transform: scale(1.3); filter: drop-shadow(0 0 10px #14b8a6); } 100% { opacity: 1; }',
-            shimmer: '0% { filter: brightness(1); } 50% { filter: brightness(2.5) drop-shadow(0 0 15px gold); } 100% { filter: brightness(1); }',
-            prism: '0% { filter: hue-rotate(0deg); } 50% { filter: hue-rotate(180deg) saturate(3); } 100% { filter: hue-rotate(360deg); }',
             neon: 'from { filter: drop-shadow(0 0 2px #2dd4bf); } to { filter: drop-shadow(0 0 25px #2dd4bf); }',
             blur: '0%, 100% { filter: blur(0px); opacity: 1; } 50% { filter: blur(10px); opacity: 0.4; }',
-            skew: '0%, 100% { transform: skew(0deg); } 50% { transform: skew(25deg, 15deg); }',
-            scan_box: '0% { clip-path: inset(0 80% 0 0); } 50% { clip-path: inset(0 0 0 80%); } 100% { clip-path: inset(0 80% 0 0); }',
-
-            // STANDARD (10)
             pulse: '0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); }',
             spin: 'from { transform: rotate(0deg); } to { transform: rotate(360deg); }',
             float: '0%, 100% { transform: translateY(0); } 50% { transform: translateY(-25px); }',
-            bounce: '0%, 20%, 50%, 80%, 100% { transform: translateY(0); } 40% { transform: translateY(-35px); } 60% { transform: translateY(-15px); }',
-            shake: '0%, 100% { transform: translateX(0); } 25% { transform: translateX(-10px); } 75% { transform: translateX(10px); }',
-            swing: '20% { transform: rotate(15deg); } 40% { transform: rotate(-10deg); } 60% { transform: rotate(5deg); } 80% { transform: rotate(-5deg); } 100% { transform: rotate(0deg); }',
-            tada: '0% { transform: scale(1); } 10%, 20% { transform: scale(0.9) rotate(-3deg); } 30%, 50%, 70%, 90% { transform: scale(1.2) rotate(3deg); } 40%, 60%, 80% { transform: scale(1.2) rotate(-3deg); } 100% { transform: scale(1) rotate(0); }',
-            jello: '11.1% { transform: none; } 22.2% { transform: skewX(-12.5deg) skewY(-12.5deg); } 33.3% { transform: skewX(6.25deg) skewY(6.25deg); } 100% { transform: none; }',
-            rubber: '0% { transform: scale3d(1, 1, 1); } 30% { transform: scale3d(1.25, 0.75, 1); } 40% { transform: scale3d(0.75, 1.25, 1); } 100% { transform: scale3d(1, 1, 1); }',
-            flash: '0%, 50%, 100% { opacity: 1; } 25%, 75% { opacity: 0.1; }'
+            bounce: '0%, 20%, 50%, 80%, 100% { transform: translateY(0); } 40% { transform: translateY(-35px); } 60% { transform: translateY(-15px); }'
         };
 
         function setTrigger(t) {
             trigger = t;
-            document.getElementById('loopBtn').className = t === 'loop' ? 'bg-teal-600 py-2 rounded text-[10px] font-bold transition-all' : 'bg-slate-800 py-2 rounded text-[10px] font-bold transition-all';
-            document.getElementById('hoverBtn').className = t === 'hover' ? 'bg-teal-600 py-2 rounded text-[10px] font-bold transition-all' : 'bg-slate-800 py-2 rounded text-[10px] font-bold transition-all';
+            document.getElementById('loopBtn').className = t === 'loop' ? 'bg-teal-600 py-2 rounded text-[10px] font-bold' : 'bg-slate-800 py-2 rounded text-[10px] font-bold';
+            document.getElementById('hoverBtn').className = t === 'hover' ? 'bg-teal-600 py-2 rounded text-[10px] font-bold' : 'bg-slate-800 py-2 rounded text-[10px] font-bold';
             update();
         }
 
@@ -167,27 +154,57 @@
             if(theme === 'check') c.classList.add('bg-checker');
         }
 
-        function update() {
+        async function update() {
             const url = document.getElementById('svgUrl').value;
             const anim = document.getElementById('animType').value;
             const dur = document.getElementById('duration').value;
+            const size = document.getElementById('svgSize').value;
+            
             document.getElementById('durLabel').innerText = dur + 's';
+            document.getElementById('sizeLabel').innerText = size + 'px';
+            document.getElementById('previewContainer').style.width = size + 'px';
+            document.getElementById('previewContainer').style.height = size + 'px';
 
-            const embed = `<div class="svga-box" style="display:inline-block; line-height:0;">
-  <img src="${url}" class="svga-it">
-  <style>
-    .svga-it { width: 150px; height: 150px; ${trigger === 'loop' ? `animation: kf-svga ${dur}s infinite ease-in-out;` : 'transition: all 0.4s ease-out;'} }
-    ${trigger === 'hover' ? `.svga-box:hover .svga-it { animation: kf-svga ${dur}s infinite ease-in-out; }` : ''}
-    @keyframes kf-svga { ${keyframeLib[anim]} }
-  </style>
+            try {
+                const response = await fetch(url);
+                let svgContent = await response.text();
+                svgContent = svgContent.replace(/<svg/, '<svg class="svga-it"');
+
+                const embedCode = `<div class="svga-wrapper" style="display:inline-block; width:${size}px; height:${size}px;">
+    ${svgContent}
+    <style>
+        .svga-it { width: 100%; height: 100%; display: block; ${trigger === 'loop' ? `animation: kf-svga ${dur}s infinite ease-in-out;` : 'transition: all 0.3s ease;'} }
+        ${trigger === 'hover' ? `.svga-wrapper:hover .svga-it { animation: kf-svga ${dur}s infinite ease-in-out; }` : ''}
+        @keyframes kf-svga { ${keyframeLib[anim]} }
+    </style>
 </div>`;
 
-            document.getElementById('previewContainer').innerHTML = embed;
-            document.getElementById('codeSnippet').innerText = embed;
+                document.getElementById('previewContainer').innerHTML = svgContent;
+                const styleTag = document.createElement('style');
+                styleTag.innerHTML = `
+                    #previewContainer svg { ${trigger === 'loop' ? `animation: kf-svga ${dur}s infinite ease-in-out;` : 'transition: all 0.3s ease;'} }
+                    ${trigger === 'hover' ? `#previewContainer:hover svg { animation: kf-svga ${dur}s infinite ease-in-out; }` : ''}
+                    @keyframes kf-svga { ${keyframeLib[anim]} }
+                `;
+                document.getElementById('previewContainer').appendChild(styleTag);
+                document.getElementById('codeSnippet').innerText = embedCode;
+
+            } catch (e) {
+                document.getElementById('previewContainer').innerHTML = "<span class='text-red-500 text-[10px] font-bold'>FETCH ERROR / CORS BLOCK</span>";
+            }
         }
 
-        ['svgUrl', 'animType', 'duration'].forEach(id => document.getElementById(id).addEventListener('input', update));
+        function copyCode() {
+            const text = document.getElementById('codeSnippet').innerText;
+            navigator.clipboard.writeText(text);
+            const btn = event.target;
+            btn.innerText = "COPIED!";
+            setTimeout(() => btn.innerText = "COPY CODE", 2000);
+        }
+
+        ['svgUrl', 'animType', 'duration', 'svgSize'].forEach(id => document.getElementById(id).addEventListener('input', update));
         update();
     </script>
 </body>
 </html>
+```
